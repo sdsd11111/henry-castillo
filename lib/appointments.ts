@@ -30,33 +30,45 @@ export async function getAppointmentsByDate(date: Date): Promise<Appointment[]> 
 /**
  * Obtiene los slots disponibles para una fecha específica
  */
+/**
+ * Obtiene los slots disponibles para una fecha específica
+ */
 export async function getAvailableSlots(date: Date): Promise<Date[]> {
+    // Usar UTC para evitar problemas de zona horaria del servidor
     const dayStart = new Date(date)
-    dayStart.setHours(CALENDAR.workingHours.start, 0, 0, 0)
+    // Reiniciar a medianoche UTC
+    dayStart.setUTCHours(0, 0, 0, 0)
 
-    const dayEnd = new Date(date)
-    dayEnd.setHours(CALENDAR.workingHours.end, 0, 0, 0)
+    const offset = 5 // Ecuador es UTC-5, así que sumamos 5 horas para obtener la hora UTC correspondiente a la hora local
 
     // Obtener citas reservadas del día
+    // La base de datos guarda la hora local ("09:00:00")
     const appointments = await getAppointmentsByDate(date)
     const reservedHours = new Set(
-        appointments.map((apt) => apt.hora.substring(0, 5)) // "14:00:00" -> "14:00"
+        appointments.map((apt) => apt.hora.substring(0, 5)) // "09:00"
     )
 
     // Generar todos los slots posibles (cada 1 hora)
     const allSlots: Date[] = []
-    let currentSlot = new Date(dayStart)
 
-    while (currentSlot < dayEnd) {
-        const hourMinute = currentSlot.toTimeString().substring(0, 5) // "14:00"
+    // Iterar desde hora inicio hasta hora fin
+    for (let hour = CALENDAR.workingHours.start; hour < CALENDAR.workingHours.end; hour++) {
+        const slot = new Date(dayStart)
+        // Establecer la hora UTC: Hora Local (9) + 5 = 14:00 UTC
+        slot.setUTCHours(hour + offset, 0, 0, 0)
+
+        // Obtener la hora formateada en tiempo de Ecuador para comparar con la DB
+        const hourString = slot.toLocaleTimeString("es-EC", {
+            timeZone: CALENDAR.timeZone,
+            hour12: false,
+            hour: "2-digit",
+            minute: "2-digit"
+        })
 
         // Solo agregar si NO está reservado
-        if (!reservedHours.has(hourMinute)) {
-            allSlots.push(new Date(currentSlot))
+        if (!reservedHours.has(hourString)) {
+            allSlots.push(slot)
         }
-
-        // Avanzar 1 hora
-        currentSlot.setHours(currentSlot.getHours() + 1)
     }
 
     return allSlots
@@ -67,7 +79,15 @@ export async function getAvailableSlots(date: Date): Promise<Date[]> {
  */
 export async function checkSlotAvailability(dateTime: Date): Promise<boolean> {
     const dateStr = dateTime.toISOString().split('T')[0]
-    const timeStr = dateTime.toTimeString().substring(0, 5) + ':00' // "14:00:00"
+
+    // Convertir el Date (que puede ser UTC) a la hora string local de Ecuador para la DB
+    const timeStr = dateTime.toLocaleTimeString("es-EC", {
+        timeZone: CALENDAR.timeZone,
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    }) // "09:00:00"
 
     const sql = `
     SELECT COUNT(*) as count
@@ -99,7 +119,15 @@ export async function createAppointment(data: {
     notas?: string
 }) {
     const dateStr = data.fecha.toISOString().split('T')[0]
-    const timeStr = data.hora.toTimeString().substring(0, 8) // "14:00:00"
+
+    // Convertir el Date a hora local string para guardar en DB
+    const timeStr = data.hora.toLocaleTimeString("es-EC", {
+        timeZone: CALENDAR.timeZone,
+        hour12: false,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+    }) // "09:00:00" (Para 14:00 UTC guardará 09:00:00)
 
     const sql = `
     INSERT INTO appointments (
