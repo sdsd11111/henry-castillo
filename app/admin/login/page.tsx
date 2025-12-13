@@ -2,11 +2,12 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Lock, User, Loader2, Home } from "lucide-react"
+import { Lock, User, Loader2, Home, ArrowLeft } from "lucide-react"
 
 export default function AdminLoginPage() {
     const [username, setUsername] = useState("")
@@ -105,6 +106,15 @@ export default function AdminLoginPage() {
                             )}
                         </Button>
                     </form>
+
+                    <div className="mt-6 text-center">
+                        <Button asChild variant="link" className="text-zinc-500 hover:text-primary">
+                            <Link href="/">
+                                <ArrowLeft className="mr-2 h-4 w-4" />
+                                Regresar al Inicio
+                            </Link>
+                        </Button>
+                    </div>
                 </CardContent>
             </Card>
         </div>
