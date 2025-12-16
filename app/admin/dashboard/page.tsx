@@ -7,9 +7,12 @@ import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { LogOut, Calendar as CalendarIcon, Clock, Mail, User, Phone, Target, Ban, Loader2, List, Trash2 } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { LogOut, Calendar as CalendarIcon, Clock, Mail, User, Phone, Target, Ban, Loader2, List, Trash2, RefreshCcw, Settings } from "lucide-react"
 import { format, parseISO } from "date-fns"
 import { es } from "date-fns/locale"
+import { AvailabilityForm } from "@/components/admin/availability-form"
+import { CalendarBooking } from "@/components/calendar-booking"
 
 interface Appointment {
     id: number
@@ -35,6 +38,10 @@ export default function AdminDashboardPage() {
     const [canceling, setCanceling] = useState<number | null>(null)
     const [deleting, setDeleting] = useState<number | null>(null)
     const [showAllAppointments, setShowAllAppointments] = useState(false)
+    const [rescheduling, setRescheduling] = useState<Appointment | null>(null)
+    const [newDate, setNewDate] = useState<Date | null>(null)
+    const [isSavingReschedule, setIsSavingReschedule] = useState(false)
+
     const router = useRouter()
 
     // Cargar todas las citas
@@ -77,10 +84,10 @@ export default function AdminDashboardPage() {
             setAppointments(data.appointments)
 
             // Crear set de fechas con citas (normalizadas)
-            const dates = new Set(
+            const dates = new Set<string>(
                 data.appointments
                     .filter((apt: Appointment) => apt.estado !== "cancelado")
-                    .map((apt: Appointment) => apt.fecha.split('T')[0]) // Normalizar
+                    .map((apt: Appointment) => apt.fecha.split('T')[0])
             )
             setDaysWithAppointments(dates)
         } catch (error) {
@@ -142,6 +149,38 @@ export default function AdminDashboardPage() {
         }
     }
 
+    const handleReschedule = async () => {
+        if (!rescheduling || !newDate) return
+
+        setIsSavingReschedule(true)
+        try {
+            const fecha = format(newDate, "yyyy-MM-dd")
+            const hora = format(newDate, "HH:mm:ss")
+
+            const response = await fetch("/api/admin/appointments", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: rescheduling.id,
+                    fecha,
+                    hora
+                }),
+            })
+
+            if (!response.ok) throw new Error("Error al reagendar")
+
+            await loadAppointments()
+            setRescheduling(null)
+            setNewDate(null)
+            alert("Cita reagendada exitosamente")
+        } catch (error) {
+            console.error(error)
+            alert("Error al reagendar la cita")
+        } finally {
+            setIsSavingReschedule(false)
+        }
+    }
+
     const handleLogout = async () => {
         try {
             await fetch("/api/admin/logout", { method: "POST" })
@@ -152,7 +191,6 @@ export default function AdminDashboardPage() {
     }
 
     const handleGoToAppointmentDate = (fecha: string) => {
-        // Parsear la fecha y seleccionarla en el calendario
         const date = parseISO(fecha.split('T')[0])
         setSelectedDate(date)
         setShowAllAppointments(false)
@@ -180,7 +218,7 @@ export default function AdminDashboardPage() {
     return (
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             {/* Header */}
-            <header className="bg-white dark:bg-gray-800 border-b">
+            <header className="bg-white dark:bg-gray-800 border-b sticky top-0 z-10">
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                     <div>
                         <h1 className="text-2xl font-bold">Panel de Administración</h1>
@@ -194,177 +232,192 @@ export default function AdminDashboardPage() {
             </header>
 
             <div className="container mx-auto px-4 py-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Calendario */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                                <CalendarIcon className="h-5 w-5" />
-                                Calendario de Citas
-                            </CardTitle>
-                            <CardDescription>
-                                Los días marcados tienen citas agendadas
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="flex justify-center">
-                            <Calendar
-                                mode="single"
-                                selected={selectedDate}
-                                onSelect={setSelectedDate}
-                                locale={es}
-                                modifiers={modifiers}
-                                modifiersClassNames={modifiersClassNames}
-                                className="rounded-md border"
-                            />
-                        </CardContent>
-                    </Card>
+                <Tabs defaultValue="citas" className="space-y-6">
+                    <TabsList>
+                        <TabsTrigger value="citas" className="flex gap-2">
+                            <CalendarIcon className="h-4 w-4" />
+                            Gestión de Citas
+                        </TabsTrigger>
+                        <TabsTrigger value="config" className="flex gap-2">
+                            <Settings className="h-4 w-4" />
+                            Configuración
+                        </TabsTrigger>
+                    </TabsList>
 
-                    {/* Lista de citas del día */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>
-                                {selectedDate
-                                    ? format(selectedDate, "EEEE, d 'de' MMMM", { locale: es })
-                                    : "Selecciona una fecha"}
-                            </CardTitle>
-                            <CardDescription>
-                                {dayAppointments.length} cita(s) para este día
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            {dayAppointments.length === 0 ? (
-                                <div className="text-center py-8 text-muted-foreground">
-                                    <Clock className="h-12 w-12 mx-auto mb-2 opacity-50" />
-                                    <p>No hay citas para este día</p>
-                                </div>
-                            ) : (
-                                <div className="space-y-4 max-h-[600px] overflow-y-auto">
-                                    {dayAppointments.map((apt) => (
-                                        <Card
-                                            key={apt.id}
-                                            className={apt.estado === "cancelado" ? "opacity-50" : ""}
-                                        >
-                                            <CardContent className="p-4">
-                                                <div className="flex justify-between items-start mb-3">
-                                                    <div>
-                                                        <div className="flex items-center gap-2 mb-1">
-                                                            <Clock className="h-4 w-4 text-primary" />
-                                                            <span className="font-bold text-lg">
-                                                                {apt.hora.substring(0, 5)}
-                                                            </span>
-                                                            <Badge variant={apt.estado === "cancelado" ? "destructive" : "default"}>
-                                                                {apt.estado}
-                                                            </Badge>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex gap-2">
-                                                        {apt.estado === "confirmado" && (
-                                                            <Button
-                                                                variant="destructive"
-                                                                size="sm"
-                                                                onClick={() => handleCancelAppointment(apt.id)}
-                                                                disabled={canceling === apt.id || deleting === apt.id}
-                                                            >
-                                                                {canceling === apt.id ? (
-                                                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                                                ) : (
+                    <TabsContent value="config">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle>Configuración de Disponibilidad</CardTitle>
+                                <CardDescription>Define tu horario de trabajo semanal para las evaluaciones.</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <AvailabilityForm />
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+
+                    <TabsContent value="citas" className="space-y-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* Calendario */}
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle className="flex items-center gap-2">
+                                        <CalendarIcon className="h-5 w-5" />
+                                        Calendario de Citas
+                                    </CardTitle>
+                                    <CardDescription>
+                                        Los días marcados tienen citas agendadas
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent className="flex justify-center">
+                                    <Calendar
+                                        mode="single"
+                                        selected={selectedDate}
+                                        onSelect={setSelectedDate}
+                                        locale={es}
+                                        modifiers={modifiers}
+                                        modifiersClassNames={modifiersClassNames}
+                                        className="rounded-md border"
+                                    />
+                                </CardContent>
+                            </Card>
+
+                            {/* Lista de citas del día */}
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>
+                                        {selectedDate
+                                            ? format(selectedDate, "EEEE, d 'de' MMMM", { locale: es })
+                                            : "Selecciona una fecha"}
+                                    </CardTitle>
+                                    <CardDescription>
+                                        {dayAppointments.length} cita(s) para este día
+                                    </CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    {dayAppointments.length === 0 ? (
+                                        <div className="text-center py-8 text-muted-foreground">
+                                            <Clock className="h-12 w-12 mx-auto mb-2 opacity-50" />
+                                            <p>No hay citas para este día</p>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-4 max-h-[600px] overflow-y-auto">
+                                            {dayAppointments.map((apt) => (
+                                                <Card
+                                                    key={apt.id}
+                                                    className={apt.estado === "cancelado" ? "opacity-50" : ""}
+                                                >
+                                                    <CardContent className="p-4">
+                                                        <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-3">
+                                                            <div>
+                                                                <div className="flex items-center gap-2 mb-1">
+                                                                    <Clock className="h-4 w-4 text-primary" />
+                                                                    <span className="font-bold text-lg">
+                                                                        {apt.hora.substring(0, 5)}
+                                                                    </span>
+                                                                    <Badge variant={apt.estado === "cancelado" ? "destructive" : "default"}>
+                                                                        {apt.estado}
+                                                                    </Badge>
+                                                                </div>
+                                                                <div className="flex items-center gap-2 text-sm mt-1">
+                                                                    <User className="h-4 w-4 text-muted-foreground" />
+                                                                    <span className="font-medium">{apt.nombre}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="flex gap-2 flex-wrap">
+                                                                {apt.estado === "confirmado" && (
                                                                     <>
-                                                                        <Ban className="h-4 w-4 mr-1" />
-                                                                        Cancelar
+                                                                        <Button
+                                                                            variant="outline"
+                                                                            size="sm"
+                                                                            onClick={() => {
+                                                                                setRescheduling(apt)
+                                                                                setNewDate(null)
+                                                                            }}
+                                                                        >
+                                                                            <RefreshCcw className="h-4 w-4 mr-1" />
+                                                                            Reagendar
+                                                                        </Button>
+                                                                        <Button
+                                                                            variant="destructive"
+                                                                            size="sm"
+                                                                            onClick={() => handleCancelAppointment(apt.id)}
+                                                                            disabled={canceling === apt.id || deleting === apt.id}
+                                                                        >
+                                                                            {canceling === apt.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Ban className="h-4 w-4 mr-1" />}
+                                                                            Cancelar
+                                                                        </Button>
                                                                     </>
                                                                 )}
-                                                            </Button>
-                                                        )}
-                                                        <Button
-                                                            variant="outline"
-                                                            size="sm"
-                                                            onClick={() => handleDeleteAppointment(apt.id)}
-                                                            disabled={deleting === apt.id || canceling === apt.id}
-                                                            className="border-red-500 text-red-500 hover:bg-red-50"
-                                                        >
-                                                            {deleting === apt.id ? (
-                                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                                            ) : (
-                                                                <>
-                                                                    <Trash2 className="h-4 w-4 mr-1" />
-                                                                    Eliminar
-                                                                </>
-                                                            )}
-                                                        </Button>
-                                                    </div>
-                                                </div>
-
-                                                <div className="space-y-2 text-sm">
-                                                    <div className="flex items-center gap-2">
-                                                        <User className="h-4 w-4 text-muted-foreground" />
-                                                        <span className="font-medium">{apt.nombre}</span>
-                                                        {apt.edad && <span className="text-muted-foreground">({apt.edad} años)</span>}
-                                                    </div>
-
-                                                    <div className="flex items-center gap-2">
-                                                        <Mail className="h-4 w-4 text-muted-foreground" />
-                                                        <a href={`mailto:${apt.email}`} className="text-blue-600 hover:underline">
-                                                            {apt.email}
-                                                        </a>
-                                                    </div>
-
-                                                    {apt.telefono && (
-                                                        <div className="flex items-center gap-2">
-                                                            <Phone className="h-4 w-4 text-muted-foreground" />
-                                                            <span>{apt.telefono}</span>
-                                                        </div>
-                                                    )}
-
-                                                    {apt.objetivo && (
-                                                        <div className="flex items-start gap-2 mt-3 pt-3 border-t">
-                                                            <Target className="h-4 w-4 text-muted-foreground mt-0.5" />
-                                                            <div>
-                                                                <p className="font-medium text-xs text-muted-foreground">Objetivo:</p>
-                                                                <p className="text-sm">{apt.objetivo}</p>
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="sm"
+                                                                    onClick={() => handleDeleteAppointment(apt.id)}
+                                                                    disabled={deleting === apt.id || canceling === apt.id}
+                                                                    className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                                                                >
+                                                                    {deleting === apt.id ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+                                                                </Button>
                                                             </div>
                                                         </div>
-                                                    )}
-                                                </div>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </div>
-                            )}
-                        </CardContent>
-                    </Card>
-                </div>
 
-                {/* Estadísticas */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                    <Card
-                        className="cursor-pointer hover:shadow-lg transition-shadow"
-                        onClick={() => setShowAllAppointments(true)}
-                    >
-                        <CardHeader className="pb-3">
-                            <CardDescription className="flex items-center justify-between">
-                                Total de Citas
-                                <List className="h-4 w-4" />
-                            </CardDescription>
-                            <CardTitle className="text-3xl">{appointments.length}</CardTitle>
-                        </CardHeader>
-                    </Card>
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardDescription>Confirmadas</CardDescription>
-                            <CardTitle className="text-3xl text-green-600">
-                                {appointments.filter((a) => a.estado === "confirmado").length}
-                            </CardTitle>
-                        </CardHeader>
-                    </Card>
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <CardDescription>Canceladas</CardDescription>
-                            <CardTitle className="text-3xl text-red-600">
-                                {appointments.filter((a) => a.estado === "cancelado").length}
-                            </CardTitle>
-                        </CardHeader>
-                    </Card>
-                </div>
+                                                        <div className="space-y-1 text-sm pl-6 border-l-2 border-primary/20">
+                                                            <div className="flex items-center gap-2">
+                                                                <Mail className="h-4 w-4 text-muted-foreground" />
+                                                                <a href={`mailto:${apt.email}`} className="text-blue-600 hover:underline">
+                                                                    {apt.email}
+                                                                </a>
+                                                            </div>
+
+                                                            {apt.telefono && (
+                                                                <div className="flex items-center gap-2">
+                                                                    <Phone className="h-4 w-4 text-muted-foreground" />
+                                                                    <span>{apt.telefono}</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </CardContent>
+                                                </Card>
+                                            ))}
+                                        </div>
+                                    )}
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        {/* Estadísticas */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                            <Card
+                                className="cursor-pointer hover:shadow-lg transition-shadow"
+                                onClick={() => setShowAllAppointments(true)}
+                            >
+                                <CardHeader className="pb-3">
+                                    <CardDescription className="flex items-center justify-between">
+                                        Total de Citas
+                                        <List className="h-4 w-4" />
+                                    </CardDescription>
+                                    <CardTitle className="text-3xl">{appointments.length}</CardTitle>
+                                </CardHeader>
+                            </Card>
+                            <Card>
+                                <CardHeader className="pb-3">
+                                    <CardDescription>Confirmadas</CardDescription>
+                                    <CardTitle className="text-3xl text-green-600">
+                                        {appointments.filter((a) => a.estado === "confirmado").length}
+                                    </CardTitle>
+                                </CardHeader>
+                            </Card>
+                            <Card>
+                                <CardHeader className="pb-3">
+                                    <CardDescription>Canceladas</CardDescription>
+                                    <CardTitle className="text-3xl text-red-600">
+                                        {appointments.filter((a) => a.estado === "cancelado").length}
+                                    </CardTitle>
+                                </CardHeader>
+                            </Card>
+                        </div>
+                    </TabsContent>
+                </Tabs>
             </div>
 
             {/* Modal de Todas las Citas */}
@@ -421,20 +474,41 @@ export default function AdminDashboardPage() {
                                                     <div className="flex items-center gap-2 text-sm">
                                                         <User className="h-4 w-4 text-muted-foreground" />
                                                         <span className="font-medium">{apt.nombre}</span>
-                                                        {apt.edad && <span className="text-muted-foreground">({apt.edad} años)</span>}
                                                     </div>
-
-                                                    {apt.objetivo && (
-                                                        <p className="text-sm text-muted-foreground mt-2 line-clamp-1">
-                                                            {apt.objetivo}
-                                                        </p>
-                                                    )}
                                                 </div>
                                             </div>
                                         </CardContent>
                                     </Card>
                                 ))
                         )}
+                    </div>
+                </DialogContent>
+            </Dialog>
+
+            {/* Modal de Reagendar */}
+            <Dialog open={!!rescheduling} onOpenChange={(open) => !open && setRescheduling(null)}>
+                <DialogContent className="max-w-xl">
+                    <DialogHeader>
+                        <DialogTitle>Reagendar Cita</DialogTitle>
+                        <DialogDescription>
+                            Selecciona la nueva fecha y hora para la cita de {rescheduling?.nombre}.
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    <div className="py-4">
+                        <CalendarBooking
+                            selectedDateTime={newDate}
+                            onDateTimeSelected={setNewDate}
+                            minNoticeHours={0} // Admin can reschedule without 24h constraint
+                        />
+                    </div>
+
+                    <div className="flex justify-end gap-2">
+                        <Button variant="outline" onClick={() => setRescheduling(null)}>Cancelar</Button>
+                        <Button onClick={handleReschedule} disabled={!newDate || isSavingReschedule}>
+                            {isSavingReschedule && <Loader2 className="animate-spin h-4 w-4 mr-2" />}
+                            Confirmar Cambio
+                        </Button>
                     </div>
                 </DialogContent>
             </Dialog>

@@ -15,20 +15,12 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/
 import Image from "next/image"
 
 const allClients = [
-    // Group 1
-    { name: "Carlos M.", before: "/images/502903707-4097245297213076-1836789078342719368-n.jpg", after: "/images/503891860-4098892280381711-848031671112462455-n.jpg" },
-    { name: "Ana P.", before: "/images/513249579-4119168998354039-2382360676927873571-n.jpg", after: "/images/503984705-4097457117191894-5670764605460021442-n.jpg" },
-    { name: "Jorge L.", before: "/images/503891860-4098892280381711-848031671112462455-n.jpg", after: "/images/513249579-4119168998354039-2382360676927873571-n.jpg" },
-    { name: "Sofia R.", before: "/images/503984705-4097457117191894-5670764605460021442-n.jpg", after: "/images/502903707-4097245297213076-1836789078342719368-n.jpg" },
-    { name: "Miguel A.", before: "/images/502903707-4097245297213076-1836789078342719368-n.jpg", after: "/images/503891860-4098892280381711-848031671112462455-n.jpg" },
-    { name: "Lucia T.", before: "/images/513249579-4119168998354039-2382360676927873571-n.jpg", after: "/images/503984705-4097457117191894-5670764605460021442-n.jpg" },
-    // Group 2
-    { name: "Roberto S.", before: "/images/503891860-4098892280381711-848031671112462455-n.jpg", after: "/images/513249579-4119168998354039-2382360676927873571-n.jpg" },
-    { name: "Elena G.", before: "/images/503984705-4097457117191894-5670764605460021442-n.jpg", after: "/images/502903707-4097245297213076-1836789078342719368-n.jpg" },
-    { name: "David F.", before: "/images/502903707-4097245297213076-1836789078342719368-n.jpg", after: "/images/503891860-4098892280381711-848031671112462455-n.jpg" },
-    { name: "Carmen H.", before: "/images/513249579-4119168998354039-2382360676927873571-n.jpg", after: "/images/503984705-4097457117191894-5670764605460021442-n.jpg" },
-    { name: "Pablo N.", before: "/images/502903707-4097245297213076-1836789078342719368-n.jpg", after: "/images/503891860-4098892280381711-848031671112462455-n.jpg" },
-    { name: "Laura B.", before: "/images/503984705-4097457117191894-5670764605460021442-n.jpg", after: "/images/502903707-4097245297213076-1836789078342719368-n.jpg" },
+    { name: "Cliente", before: "/images/galeria/antes.webp", after: "/images/galeria/despues.webp", beforeLabel: "Semana 1", afterLabel: "Semana 8" },
+    { name: "Guille", before: "/images/galeria/guille-antes.webp", after: "/images/galeria/guille-despues.webp", beforeLabel: "Semana 1", afterLabel: "Semana 14" },
+    { name: "Lara", before: "/images/galeria/lara-antes.webp", after: "/images/galeria/lara-despues.webp", beforeLabel: "Semana 1", afterLabel: "Semana 32" },
+    { name: "Leo", before: "/images/galeria/leo-antes.webp", after: "/images/galeria/leo-despues.webp", beforeLabel: "Semana 1", afterLabel: "Semana 12" },
+    { name: "Mateo", before: "/images/galeria/mateo-antes.webp", after: "/images/galeria/mateo-despues.webp", beforeLabel: "Semana 1", afterLabel: "Semana 10" },
+    { name: "Migue", before: "/images/galeria/migue-antes.webp", after: "/images/galeria/migue-despues.webp", beforeLabel: "Semana 1", afterLabel: "Semana 27" },
 ]
 
 // Helper function to chunk array
@@ -134,7 +126,7 @@ function ReviewCard({ review }: { review: typeof reviews[0] }) {
     )
 }
 
-function TransformationPair({ client }: { client: typeof allClients[0] }) {
+function TransformationPair({ client, onSelect }: { client: typeof allClients[0], onSelect: () => void }) {
     return (
         <div className="flex flex-col">
             {/* Centered Title per Pair */}
@@ -143,73 +135,49 @@ function TransformationPair({ client }: { client: typeof allClients[0] }) {
             </div>
 
             {/* Comparison (Lightbox Trigger) */}
-            <Dialog>
-                <DialogTrigger asChild>
-                    <div className="flex gap-0.5 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 cursor-pointer hover:opacity-90 transition-opacity">
-                        {/* Before */}
-                        <div className="relative w-1/2 aspect-[4/5] group overflow-hidden">
-                            <Image
-                                src={client.before}
-                                alt={`Antes ${client.name}`}
-                                fill
-                                className="object-cover"
-                            />
-                            <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-bold text-neutral-300 uppercase">
-                                Antes
-                            </div>
-                        </div>
+            <div
+                className="flex gap-0.5 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 cursor-pointer hover:opacity-90 transition-opacity"
+                onClick={onSelect}
+            >
+                {/* Before */}
+                <div className="relative w-1/2 aspect-[4/5] group overflow-hidden">
+                    <Image
+                        src={client.before}
+                        alt={`Antes ${client.name}`}
+                        fill
+                        className="object-cover"
+                    />
+                    <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-bold text-neutral-300 uppercase">
+                        Antes
+                    </div>
+                </div>
 
-                        {/* After */}
-                        <div className="relative w-1/2 aspect-[4/5] group overflow-hidden">
-                            <Image
-                                src={client.after}
-                                alt={`Despues ${client.name}`}
-                                fill
-                                className="object-cover"
-                            />
-                            <div className="absolute top-2 right-2 bg-primary/90 text-black px-2 py-0.5 rounded text-[10px] font-bold uppercase">
-                                Después
-                            </div>
-                        </div>
-                        {/* Hint overlay */}
-                        <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
-                            <span className="bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-md">Ver Completo</span>
-                        </div>
+                {/* After */}
+                <div className="relative w-1/2 aspect-[4/5] group overflow-hidden">
+                    <Image
+                        src={client.after}
+                        alt={`Despues ${client.name}`}
+                        fill
+                        className="object-cover"
+                    />
+                    <div className="absolute top-2 right-2 bg-primary/90 text-black px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                        Después
                     </div>
-                </DialogTrigger>
-                <DialogContent className="max-w-5xl bg-zinc-950 border-zinc-800 p-0 overflow-hidden">
-                    <DialogTitle className="sr-only">Transformación de {client.name}</DialogTitle>
-                    <div className="flex gap-1 md:gap-2 p-4 h-[80vh]">
-                        <div className="relative w-1/2 h-full rounded-lg overflow-hidden border border-zinc-800">
-                            <Image
-                                src={client.before}
-                                alt={`Antes ${client.name}`}
-                                fill
-                                className="object-contain"
-                            />
-                            <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded text-sm font-bold text-white uppercase">
-                                Antes
-                            </div>
-                        </div>
-                        <div className="relative w-1/2 h-full rounded-lg overflow-hidden border border-zinc-800">
-                            <Image
-                                src={client.after}
-                                alt={`Despues ${client.name}`}
-                                fill
-                                className="object-contain"
-                            />
-                            <div className="absolute top-4 right-4 bg-primary text-black px-3 py-1 rounded text-sm font-bold uppercase">
-                                Después
-                            </div>
-                        </div>
-                    </div>
-                </DialogContent>
-            </Dialog>
+                </div>
+                {/* Hint overlay */}
+                <div className="absolute inset-0 bg-black/0 hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
+                    <span className="bg-black/50 text-white text-xs px-2 py-1 rounded backdrop-blur-md">Ver Completo</span>
+                </div>
+            </div>
         </div>
     )
 }
 
 export function ResultsSection() {
+    const [selectedClientName, setSelectedClientName] = useState<string | null>(null)
+
+    const selectedClient = selectedClientName ? allClients.find(c => c.name === selectedClientName) : null
+
     return (
         <section className="py-24 bg-zinc-950" aria-labelledby="results-heading">
             {/* Header Container */}
@@ -230,12 +198,46 @@ export function ResultsSection() {
             {/* Gallery Grid - Full Width */}
             <div className="mb-20 w-full">
 
+                {/* Dialog Controlled by Parent State */}
+                <Dialog open={!!selectedClient} onOpenChange={(open) => !open && setSelectedClientName(null)}>
+                    <DialogContent className="max-w-5xl bg-zinc-950 border-zinc-800 p-0 overflow-hidden">
+                        {selectedClient && (
+                            <div key={selectedClient.name} className="flex flex-col md:flex-row h-[80vh] md:h-[600px]">
+                                <DialogTitle className="sr-only">Transformación de {selectedClient.name}</DialogTitle>
+                                <div className="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden border-b md:border-b-0 md:border-r border-zinc-800">
+                                    <Image
+                                        src={selectedClient.before}
+                                        alt={`Antes ${selectedClient.name}`}
+                                        fill
+                                        className="object-contain bg-black"
+                                    />
+                                    <div className="absolute top-4 left-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded text-sm font-bold text-white uppercase">
+                                        {selectedClient.beforeLabel}
+                                    </div>
+                                </div>
+                                <div className="relative w-full md:w-1/2 h-1/2 md:h-full overflow-hidden">
+                                    <Image
+                                        src={selectedClient.after}
+                                        alt={`Despues ${selectedClient.name}`}
+                                        fill
+                                        className="object-contain bg-black"
+                                    />
+                                    <div className="absolute top-4 right-4 bg-primary text-black px-3 py-1 rounded text-sm font-bold uppercase">
+                                        {selectedClient.afterLabel}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </DialogContent>
+                </Dialog>
+
+
                 {/* MOBILE VIEW: 2 Items per Slide */}
                 <div className="block md:hidden">
                     <Carousel
                         opts={{
                             align: "start",
-                            loop: true,
+                            loop: false,
                         }}
                         className="w-full"
                     >
@@ -243,8 +245,39 @@ export function ResultsSection() {
                             {mobileClientGroups.map((group, groupIndex) => (
                                 <CarouselItem key={groupIndex} className="basis-full px-4">
                                     <div className="grid grid-cols-1 gap-8">
-                                        {group.map((client, index) => (
-                                            <TransformationPair key={index} client={client} />
+                                        {group.map((client) => (
+                                            <div key={client.name} className="flex flex-col">
+                                                <div className="text-center mb-2">
+                                                    <h3 className="text-white font-bold text-sm md:text-xl tracking-wide">{client.name}</h3>
+                                                </div>
+                                                <div
+                                                    className="flex gap-0.5 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 cursor-pointer hover:opacity-90 transition-opacity"
+                                                    onClick={() => setSelectedClientName(client.name)}
+                                                >
+                                                    <div className="relative w-1/2 aspect-[4/5] group overflow-hidden">
+                                                        <Image
+                                                            src={client.before}
+                                                            alt={`Antes ${client.name}`}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                        <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-bold text-neutral-300 uppercase">
+                                                            {client.beforeLabel}
+                                                        </div>
+                                                    </div>
+                                                    <div className="relative w-1/2 aspect-[4/5] group overflow-hidden">
+                                                        <Image
+                                                            src={client.after}
+                                                            alt={`Despues ${client.name}`}
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                        <div className="absolute top-2 right-2 bg-primary/90 text-black px-2 py-0.5 rounded text-[10px] font-bold uppercase">
+                                                            {client.afterLabel}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         ))}
                                     </div>
                                 </CarouselItem>
@@ -262,16 +295,54 @@ export function ResultsSection() {
                     <Carousel
                         opts={{
                             align: "start",
-                            loop: true,
+                            loop: false,
                         }}
                         className="w-full"
                     >
-                        <CarouselContent className="-ml-1">
+                        <CarouselContent className="">
                             {desktopClientGroups.map((group, groupIndex) => (
-                                <CarouselItem key={groupIndex} className="basis-full pl-1">
-                                    <div className="grid grid-cols-3 gap-2 px-12">
-                                        {group.map((client, index) => (
-                                            <TransformationPair key={index} client={client} />
+                                <CarouselItem key={`desktop-group-${groupIndex}`} className="basis-full">
+                                    <div className="grid grid-cols-3 gap-6 px-12">
+                                        {group.map((client) => (
+                                            <div key={`desktop-client-${client.name}`} className="flex flex-col relative group">
+                                                <div className="text-center mb-3">
+                                                    <h3 className="text-white font-bold text-xl tracking-wide">{client.name}</h3>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    className="flex gap-1 rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-primary/50 transition-all relative outline-none focus:ring-2 focus:ring-primary/50"
+                                                    onClick={() => setSelectedClientName(client.name)}
+                                                >
+                                                    <div className="relative w-1/2 aspect-[4/5] overflow-hidden">
+                                                        <Image
+                                                            src={client.before}
+                                                            alt={`Antes ${client.name}`}
+                                                            fill
+                                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                                        />
+                                                        <div className="absolute top-2 left-2 bg-black/60 backdrop-blur-sm px-2 py-0.5 rounded text-[10px] font-bold text-neutral-300 uppercase z-10">
+                                                            {client.beforeLabel}
+                                                        </div>
+                                                    </div>
+                                                    <div className="relative w-1/2 aspect-[4/5] overflow-hidden">
+                                                        <Image
+                                                            src={client.after}
+                                                            alt={`Despues ${client.name}`}
+                                                            fill
+                                                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                                        />
+                                                        <div className="absolute top-2 right-2 bg-primary/90 text-black px-2 py-0.5 rounded text-[10px] font-bold uppercase z-10">
+                                                            {client.afterLabel}
+                                                        </div>
+                                                    </div>
+                                                    {/* Hint overlay */}
+                                                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center z-20">
+                                                        <span className="bg-black/70 text-white text-sm px-4 py-2 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">
+                                                            Ver Transformación
+                                                        </span>
+                                                    </div>
+                                                </button>
+                                            </div>
                                         ))}
                                     </div>
                                 </CarouselItem>

@@ -1,4 +1,5 @@
 export const CONTACT = {
+  email: "email@teamhenrycastillo.com",
   calLink: "https://cal.com/henry-castillo-yohgbh/cal.com-henry-castillo-valoracion",
   whatsapp: "593986562727",
   whatsappLink: "https://wa.me/593986562727?text=Hola%20Henry,%20me%20interesa%20tu%20entrenamiento%20personalizado",

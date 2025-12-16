@@ -3,10 +3,11 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Facebook, Instagram, MessageCircle, MapPin, Mail, Clock, Phone } from "lucide-react"
+import { CONTACT } from "@/lib/constants"
 
 export function Footer() {
   return (
-    <footer className="bg-[#272726] text-white pt-16 pb-8 border-t border-white/5" role="contentinfo">
+    <footer className="bg-black text-white pt-16 pb-8 border-t border-white/5" role="contentinfo">
       <div className="container mx-auto px-4">
         {/* Main Footer Content - 4 Columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -65,7 +66,9 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-3 text-neutral-400 text-sm">
                 <Mail className="w-5 h-5 text-primary shrink-0" />
-                <span>contacto@henrycastillo.com</span>
+                <a href={`mailto:${CONTACT.email}`} className="hover:text-primary transition-colors">
+                  {CONTACT.email}
+                </a>
               </li>
               <li className="flex items-start gap-3 text-neutral-400 text-sm">
                 <Clock className="w-5 h-5 text-primary shrink-0" />

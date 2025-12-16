@@ -2,8 +2,8 @@ import nodemailer from 'nodemailer'
 
 // Configurar transporter de nodemailer con cPanel
 const transporter = nodemailer.createTransport({
-  host: 'smtp.teamhenrycastillo.com',
-  port: 465,
+  host: process.env.SMTP_HOST || 'smtp.teamhenrycastillo.com',
+  port: Number(process.env.SMTP_PORT) || 465,
   secure: true, // true for 465, false for other ports
   auth: {
     user: process.env.EMAIL_USER,

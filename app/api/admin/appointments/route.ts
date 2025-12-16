@@ -75,6 +75,49 @@ export async function PATCH(request: Request) {
     }
 }
 
+// PUT - Actualizar cita (reagendar)
+export async function PUT(request: Request) {
+    try {
+        const isAuth = await isAdminAuthenticated()
+        if (!isAuth) {
+            return NextResponse.json({ error: 'No autorizado' }, { status: 401 })
+        }
+
+        const { id, fecha, hora } = await request.json()
+
+        if (!id || !fecha || !hora) {
+            return NextResponse.json({ error: 'Faltan datos requeridos (id, fecha, hora)' }, { status: 400 })
+        }
+
+        // Importación dinámica para evitar conflictos circulares si los hubiera
+        const { updateAppointment } = await import('@/lib/admin-appointments')
+
+        // fecha viene como YYYY-MM-DD
+        // hora viene como ISO string completo o HH:mm... 
+        // Normalmente convertimos Date a string HH:mm:ss.
+        // Si el frontend envía ISO string para fecha y hora:
+        // Necesitamos asegurar formato MySQL.
+
+        // Simple validación/transformación si es necesario:
+        const cleanFecha = fecha.split('T')[0]
+        const cleanHora = hora.includes('T') ? new Date(hora).toLocaleTimeString('es-EC', { hour12: false }) : hora
+
+        const result = await updateAppointment(id, cleanFecha, cleanHora)
+
+        return NextResponse.json({
+            success: true,
+            message: 'Cita actualizada exitosamente',
+            appointment: result
+        })
+    } catch (error) {
+        console.error('Error updating appointment:', error)
+        return NextResponse.json(
+            { error: 'Error al actualizar cita' },
+            { status: 500 }
+        )
+    }
+}
+
 // DELETE - Eliminar cita permanentemente
 export async function DELETE(request: Request) {
     try {

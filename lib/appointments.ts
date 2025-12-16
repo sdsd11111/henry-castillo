@@ -33,13 +33,49 @@ export async function getAppointmentsByDate(date: Date): Promise<Appointment[]> 
 /**
  * Obtiene los slots disponibles para una fecha específica
  */
+import { WEEKLY_AVAILABILITY } from "@/lib/constants" // Fallback if needed, but we use DB
+import { getWeeklyAvailability, AvailabilitySettings } from "./availability-settings"
+
+/**
+ * Obtiene los slots disponibles para una fecha específica
+ */
 export async function getAvailableSlots(date: Date): Promise<Date[]> {
     // Usar UTC para evitar problemas de zona horaria del servidor
     const dayStart = new Date(date)
     // Reiniciar a medianoche UTC
-    dayStart.setUTCHours(0, 0, 0, 0)
+    dayStart.setUTCHours(0, 0, 0, 0) // Esto es 00:00 UTC.
 
-    const offset = 5 // Ecuador es UTC-5, así que sumamos 5 horas para obtener la hora UTC correspondiente a la hora local
+    // Get dynamic settings
+    const settings = await getWeeklyAvailability()
+
+    // Map day index (0=Sunday) to settings key
+    const days: (keyof AvailabilitySettings)[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+    const dayIndex = dayStart.getUTCDay() // UTC Day might differ from local day if offset shifts date? 
+    // Wait, `date` coming in is usually created as UTC string from frontend? 
+    // Frontend sends `date.toISOString()`.
+    // If I pick "Dec 16", frontend sends "2023-12-16T00:00:00.000Z" (if purely date).
+    // `dayIndex` 0 is Sunday.
+
+    // ADJUSTMENT: We want the day of week in ECUADOR time.
+    // UTC 00:00 is Ecuador 19:00 previous day.
+    // So we should shift by offset before getting day.
+    const offset = 5 // UTC-5
+    // But `getUTCDay()` on 00:00 UTC will be the date we expect (e.g. 16th).
+    // Wait, 00:00 UTC on 16th IS 19:00 on 15th in Ecuador.
+    // So "Monday 16th" in Calendar matches "Monday 16th" in JS Date? 
+    // Yes, because usually we work with local dates in frontend.
+    // If frontend sends "2025-12-16T00:00:00.000Z", meant as "Start of Dec 16th".
+    // We treat it as THE day. 
+    // So `dayStart.getUTCDay()` returns the correct day of week index for that date.
+
+    const dayKey = days[dayStart.getUTCDay()]
+    const dayConfig = settings[dayKey]
+
+    if (!dayConfig.enabled) {
+        return []
+    }
+
+    const { start, end } = dayConfig
 
     // Obtener citas reservadas del día
     // La base de datos guarda la hora local ("09:00:00")
@@ -52,9 +88,10 @@ export async function getAvailableSlots(date: Date): Promise<Date[]> {
     const allSlots: Date[] = []
 
     // Iterar desde hora inicio hasta hora fin
-    for (let hour = CALENDAR.workingHours.start; hour < CALENDAR.workingHours.end; hour++) {
+    for (let hour = start; hour < end; hour++) {
         const slot = new Date(dayStart)
-        // Establecer la hora UTC: Hora Local (9) + 5 = 14:00 UTC
+        // Establecer la hora UTC: Hora Local (hour) + 5 = UTC
+        // Example: 9 AM Local => 14 PM UTC.
         slot.setUTCHours(hour + offset, 0, 0, 0)
 
         // Obtener la hora formateada en tiempo de Ecuador para comparar con la DB

@@ -12,9 +12,10 @@ import { formatSlotTime } from "@/lib/date-utils"
 interface CalendarBookingProps {
     onDateTimeSelected: (dateTime: Date) => void
     selectedDateTime?: Date | null
+    minNoticeHours?: number
 }
 
-export function CalendarBooking({ onDateTimeSelected, selectedDateTime }: CalendarBookingProps) {
+export function CalendarBooking({ onDateTimeSelected, selectedDateTime, minNoticeHours = 24 }: CalendarBookingProps) {
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(selectedDateTime || undefined)
     const [selectedTime, setSelectedTime] = useState<string | null>(null)
     const [availableSlots, setAvailableSlots] = useState<Date[]>([])
@@ -50,10 +51,17 @@ export function CalendarBooking({ onDateTimeSelected, selectedDateTime }: Calend
             }
 
             const slots = data.slots.map((slot: string) => new Date(slot))
-            setAvailableSlots(slots)
 
-            if (slots.length === 0) {
-                setError("No hay horarios disponibles para esta fecha")
+            // Filter slots to enforce 24h advance notice
+            const now = new Date()
+            const minimumDate = new Date(now.getTime() + 24 * 60 * 60 * 1000) // Now + 24h
+
+            const validSlots = slots.filter((slot: Date) => slot >= minimumDate)
+
+            setAvailableSlots(validSlots)
+
+            if (validSlots.length === 0) {
+                setError("No hay horarios disponibles para esta fecha (mínimo 24h de anticipación)")
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : "Error al cargar horarios")
@@ -84,7 +92,12 @@ export function CalendarBooking({ onDateTimeSelected, selectedDateTime }: Calend
                         mode="single"
                         selected={selectedDate}
                         onSelect={setSelectedDate}
-                        disabled={(date) => date < today || date > new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)}
+                        disabled={(date) => {
+                            const tomorrow = new Date()
+                            tomorrow.setDate(tomorrow.getDate() + 1)
+                            tomorrow.setHours(0, 0, 0, 0)
+                            return date < tomorrow || date > new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+                        }}
                         locale={es}
                         className="rounded-md border"
                     />

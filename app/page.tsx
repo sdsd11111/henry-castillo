@@ -1,7 +1,7 @@
 import { Header } from "@/components/header"
 import { HeroSection } from "@/components/hero-section"
 import { AboutSection } from "@/components/about-section"
-import { PhilosophySection } from "@/components/philosophy-section"
+import { VitalitySection } from "@/components/vitality-section"
 
 import { ResultsSection } from "@/components/results-section"
 import { FaqSection } from "@/components/faq-section"
@@ -18,7 +18,7 @@ export default function Home() {
       <HeroSection />
       <AboutSection />
       <ServicesSection />
-      <PhilosophySection />
+      <VitalitySection />
       <ProcessSection />
 
       <ResultsSection />

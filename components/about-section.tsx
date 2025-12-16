@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { Dumbbell, Activity, Apple, ArrowRight } from "lucide-react"
+import { Dumbbell, Activity, Apple, ArrowRight, ClipboardCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { EvaluationModal } from "@/components/evaluation-modal"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { CONTACT } from "@/lib/constants"
 
@@ -11,6 +12,7 @@ export function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
   const [isBioExpanded, setIsBioExpanded] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,7 +57,7 @@ export function AboutSection() {
           >
             <div className="relative aspect-[3/4] max-w-md mx-auto sticky top-24">
               <Image
-                src="/images/513249579-4119168998354039-2382360676927873571-n.jpg"
+                src="/images/seccion 1.webp"
                 alt="Henry Castillo - Entrenador Personal Certificado"
                 fill
                 className="object-cover rounded-2xl shadow-2xl shadow-primary/10"
@@ -75,31 +77,66 @@ export function AboutSection() {
           >
             <div className="bg-zinc-900/50 border-l-4 border-primary p-6 rounded-r-lg">
               <p className="text-lg text-white font-medium italic">
-                "Mi principio inquebrantable: El verdadero éxito físico solo es sostenible si tienes salud interna. No solo verte fuerte, estar sano por dentro."
+                "Mis servicios son tanto presenciales si te encuentras en la ciudad de Loja Ecuador como online si te encuentras en otra ciudad o país."
               </p>
             </div>
 
-            <p className="text-neutral-400 leading-relaxed text-lg text-justify">
-              Soy Henry Castillo, tu Entrenador Personal certificado en Loja, Ecuador, especializado en la transformación de profesionales y adultos de 40+ años. Mi
+            <div className="text-neutral-400 leading-relaxed text-lg text-justify space-y-4">
+              <div>
+                <strong className="block text-white mb-2 text-xl">Entrenador Personal en Loja: Hábitos Reales, Resultados Naturales</strong>
+                Soy Henry Castillo, Entrenador Personal en Loja especializado en transformación integral. Mi trabajo es apoyarte en la creación de hábitos saludables sostenibles; es la única forma de conseguir resultados duraderos.
+              </div>
+
               {!isBioExpanded && (
                 <button
                   onClick={() => setIsBioExpanded(true)}
-                  className="ml-2 text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
+                  className="text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
                 >
                   Seguir leyendo
                 </button>
               )}
+
               {isBioExpanded && (
-                <span> metodología trasciende el gimnasio; es un compromiso de longevidad basado en el enfoque integral: <span className="text-white font-semibold">Fitness + Nutrición + Data Científica</span>.
+                <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300 pt-2">
+                  <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                    <p className="font-semibold text-primary mb-2">Bajo mi rol de Coach fitness, mantengo una ética innegociable:</p>
+                    <ul className="space-y-3 text-sm sm:text-base">
+                      <li>
+                        <strong className="text-white">Sin falsas promesas:</strong> No te diré que lograrás cambios drásticos de "redes sociales" en poco tiempo. Un proceso serio requiere constancia.
+                      </li>
+                      <li>
+                        <strong className="text-white">100% Natural:</strong> Si buscas utilizar fármacos para ganar masa o definirte, no soy el profesional para ti. Mi enfoque de entrenamiento personalizado se aleja del dopaje y prioriza tu salud.
+                      </li>
+                    </ul>
+
+                    <div className="pt-4 mt-4 border-t border-white/10">
+                      <p className="font-semibold text-primary mb-2">Aquí trabajamos con:</p>
+                      <ul className="flex flex-wrap gap-4 text-sm font-medium text-white">
+                        <li className="flex items-center gap-2">
+                          <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                          Ciencia
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                          Experiencia
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <div className="h-1.5 w-1.5 rounded-full bg-primary" />
+                          Sentido Común
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
                   <button
                     onClick={() => setIsBioExpanded(false)}
-                    className="ml-2 text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
+                    className="text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
                   >
                     Ocultar
                   </button>
-                </span>
+                </div>
               )}
-            </p>
+            </div>
 
             {/* Interactive Accordion Pillars */}
             <Accordion type="single" collapsible className="w-full space-y-4">
@@ -117,46 +154,26 @@ export function AboutSection() {
                 </AccordionTrigger>
                 <AccordionContent className="text-neutral-300 space-y-4 pb-4 pl-16">
                   <p>
-                    <strong className="text-white">Descripción:</strong> Dejo de lado las rutinas genéricas para diseñar un programa que se ajusta a tu historial médico, tus objetivos reales y tu vida ocupada.
+                    <strong className="text-white">Como Entrenador Personal en Loja, mi enfoque es claro:</strong> no creo en "rutinas milagro" ni en listas interminables de ejercicios que cambian cada semana. Creo en el volumen e intensidad exactos para cada persona y en mantener el plan el tiempo necesario para ver una evolución real.
                   </p>
                   <p>
-                    <strong className="text-white">Enfoque de Experiencia:</strong> Trabajamos contigo para crear una disciplina que puedas mantener a los 60 años. Mi enfoque está en la prevención, garantizando que cada repetición y cada ejercicio contribuyan a tu bienestar futuro.
+                    Diseño programas que se ajustan a tu historial y objetivos, priorizando la técnica y la prevención para que tu bienestar se mantenga firme a los 60 años.
                   </p>
-                  <div className="bg-primary/5 p-3 rounded-md border border-primary/10 text-sm">
-                    <strong className="text-primary block mb-1">Nota Importante:</strong>
-                    El servicio presencial es ideal si buscas comenzar desde cero y establecer bases sólidas. El servicio online está optimizado para atletas experimentados que ya conocen la técnica y buscan llevar su rendimiento al siguiente nivel.
+                  <div className="space-y-3 mt-4">
+                    <div className="bg-primary/10 p-3 rounded-md border border-primary/20">
+                      <strong className="text-primary block mb-1">Servicio Presencial en Loja:</strong>
+                      <span className="text-sm">Ideal para comenzar desde cero, establecer bases sólidas y asegurar una ejecución perfecta.</span>
+                    </div>
+                    <div className="bg-blue-500/10 p-3 rounded-md border border-blue-500/20">
+                      <strong className="text-blue-400 block mb-1">Coach Fitness Online:</strong>
+                      <span className="text-sm">Optimizado para atletas experimentados que dominan la técnica y buscan llevar su rendimiento al siguiente nivel con una programación científica.</span>
+                    </div>
                   </div>
                 </AccordionContent>
               </AccordionItem>
 
               {/* Pillar 2 */}
-              <AccordionItem value="item-2" className="border border-zinc-800 rounded-lg bg-zinc-900/30 px-4">
-                <AccordionTrigger className="hover:no-underline py-4">
-                  <div className="flex items-center gap-4 text-left">
-                    <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400">
-                      <Activity className="h-6 w-6" />
-                    </div>
-                    <span className="text-lg font-semibold text-primary uppercase tracking-wide">
-                      Pilar: La Ventaja de la Data Médica
-                    </span>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="text-neutral-300 space-y-4 pb-4 pl-16">
-                  <p>
-                    <strong className="text-white">Descripción:</strong> Soy tu entrenador, pero diseño tu plan con la precisión de un científico. Utilizo tus datos de salud como el mapa para tu éxito.
-                  </p>
-                  <div className="space-y-2">
-                    <p><strong className="text-white">Enfoque de Ciencia:</strong> Mi protocolo requiere una evaluación inicial completa que incluye analizar tus exámenes de sangre (colesterol, triglicéridos, glucosa, hematocrito).</p>
-                    <ul className="list-disc list-inside pl-2 space-y-1 text-sm text-neutral-400">
-                      <li>Ajustar la intensidad de tu entrenamiento de forma segura.</li>
-                      <li>Detectar riesgos como la resistencia a la insulina o el colesterol elevado y adaptar la estrategia nutricional.</li>
-                    </ul>
-                  </div>
-                  <p>
-                    <strong className="text-white">Coordinación:</strong> Si es necesario, trabajo en coordinación contigo y tu médico de cabecera para que tu plan de ejercicio sea complementario y seguro.
-                  </p>
-                </AccordionContent>
-              </AccordionItem>
+
 
               {/* Pillar 3 */}
               <AccordionItem value="item-3" className="border border-zinc-800 rounded-lg bg-zinc-900/30 px-4">
@@ -172,17 +189,27 @@ export function AboutSection() {
                 </AccordionTrigger>
                 <AccordionContent className="text-neutral-300 space-y-4 pb-4 pl-16">
                   <p>
-                    <strong className="text-white">Descripción:</strong> La nutrición no es una adivinanza, es una ciencia exacta. Tu dieta será el pilar que respalde tu salud cardiovascular.
+                    <strong className="text-white">Como Entrenador Personal en Loja, entiendo que es imposible imponer una dieta rígida</strong> sin conocer tu capacidad de cumplirla, la variedad de alimentos a tu alcance o sus precios. Por eso, no trabajo con planes cerrados que ignoran tu día a día.
                   </p>
-                  <p>
-                    <strong className="text-white">Enfoque de Precisión:</strong> Calculamos con exactitud tus calorías y macronutrientes con tecnología (MyFitnessPal u otras apps), y luego lo personalizamos según los resultados de tus exámenes médicos.
-                  </p>
-                  <p>
-                    <strong className="text-white">Salud Digestiva:</strong> Monitoreamos la absorción de nutrientes y la salud intestinal usando la Escala de Bristol. Porque la forma en que tu cuerpo procesa los alimentos es tan importante como lo que comes.
-                  </p>
-                  <p className="text-sm italic text-neutral-400 border-t border-zinc-800 pt-2 mt-2">
-                    <strong className="text-white not-italic">Seguimiento:</strong> Evaluaciones detalladas de progreso cada 15 días y nuevos exámenes de control cada 3 meses.
-                  </p>
+
+                  <div className="space-y-4 mt-2">
+                    <p className="font-semibold text-primary">Mi metodología de Nutrición Deportiva se basa en la realidad y la precisión:</p>
+
+                    <ul className="space-y-3">
+                      <li className="bg-white/5 p-3 rounded border border-white/10">
+                        <strong className="text-white block mb-1">Estimación de Macros:</strong>
+                        <span className="text-sm text-neutral-400">En función de tus objetivos y lo conversado en la consulta, te proporciono la estimación de calorías y la distribución exacta de proteínas, grasas e hidratos de carbono.</span>
+                      </li>
+                      <li className="bg-white/5 p-3 rounded border border-white/10">
+                        <strong className="text-white block mb-1">Flexibilidad Real:</strong>
+                        <span className="text-sm text-neutral-400">Tú decides cómo cubrir esos requerimientos según tu presupuesto y estilo de vida, asegurando un plan que realmente puedas mantener.</span>
+                      </li>
+                      <li className="bg-white/5 p-3 rounded border border-white/10">
+                        <strong className="text-white block mb-1">Soporte Científico:</strong>
+                        <span className="text-sm text-neutral-400">Complementamos esta estructura con el monitoreo de tu salud digestiva y el ajuste según tus exámenes médicos, para que tu alimentación respalde tu rendimiento.</span>
+                      </li>
+                    </ul>
+                  </div>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -190,22 +217,23 @@ export function AboutSection() {
             <div className="pt-4">
               <Button
                 size="lg"
-                className="w-full sm:w-auto text-base px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/20 group"
-                asChild
+                className="w-full sm:w-auto text-base px-8 py-6 bg-primary text-primary-foreground hover:bg-primary/90 font-bold shadow-lg shadow-primary/20 group gap-2"
+                onClick={() => setIsModalOpen(true)}
               >
-                <a href={CONTACT.whatsappLink} target="_blank" rel="noopener noreferrer">
-                  <span>Contactar Ahora</span>
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </a>
+                <ClipboardCheck className="h-5 w-5" />
+                <span>Evaluación Gratuita</span>
               </Button>
-              <p className="mt-4 text-sm text-neutral-500 font-medium">
-                ¿Cansado de planes superficiales? Entrena con la ciencia de tu lado.
+              <p className="mt-4 text-sm text-neutral-400 font-medium max-w-lg">
+                Si aún tienes dudas, agenda una cita gratuita de 40 minutos para evaluarte y aclarar tus inquietudes. Así podrás decidir, sin compromiso, si quieres iniciar mis asesorías.
               </p>
             </div>
 
           </div>
         </div>
       </div>
+      <EvaluationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
+
+
   )
 }

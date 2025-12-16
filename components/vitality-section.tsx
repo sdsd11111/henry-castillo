@@ -31,7 +31,7 @@ const pillars = [
   {
     title: "Control Digestivo (Escala de Bristol)",
     description: "La base de tu energía es tu digestión. Realizamos un seguimiento de tu salud intestinal para garantizar que realmente estás absorbiendo los nutrientes que consumes. Si tu sistema digestivo no funciona, tus músculos tampoco.",
-    icon: Microscope, // Using Microscope as a proxy for detailed analysis/search if specific icon unavailable
+    icon: Microscope,
   },
 ]
 
@@ -96,7 +96,7 @@ function HenryContent() {
   )
 }
 
-export function PhilosophySection() {
+export function VitalitySection() {
   return (
     <section className="py-24 bg-neutral-950 relative overflow-hidden">
       {/* Background Pattern */}
@@ -117,31 +117,42 @@ export function PhilosophySection() {
           </p>
         </div>
 
-        {/* 4 Pillars - Mobile Carousel */}
-        <div className="md:hidden mb-16">
-          <Carousel
-            opts={{ align: "start", loop: true }}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-4">
-              {pillars.map((pillar, index) => (
-                <CarouselItem key={index} className="pl-4 basis-[85%]">
-                  <PillarCard pillar={pillar} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="hidden sm:block">
-              <CarouselPrevious />
-              <CarouselNext />
-            </div>
-          </Carousel>
-        </div>
+        {/* Protocolo de Salud y Metabolismo Content */}
+        <div className="max-w-4xl mx-auto mb-20 bg-neutral-900/40 p-8 md:p-12 rounded-3xl border border-neutral-800">
+          <h3 className="text-2xl md:text-3xl font-bold text-white mb-6 uppercase tracking-wide">
+            PROTOCOLO DE SALUD Y METABOLISMO
+          </h3>
+          <p className="text-neutral-300 text-lg leading-relaxed mb-8">
+            Como parte de mi protocolo como <strong>Entrenador Personal en Loja</strong>, la salud es prioritaria. Para diseñar un plan de entrenamiento personalizado y alimentación que respete y potencie tu metabolismo y tu salud cardiovascular, te solicitaré:
+          </p>
 
-        {/* 4 Pillars - Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-2 gap-8 mb-20">
-          {pillars.map((pillar, index) => (
-            <PillarCard key={index} pillar={pillar} />
-          ))}
+          <div className="space-y-6">
+            <div className="flex gap-4">
+              <div className="bg-primary/10 p-3 h-fit rounded-lg">
+                <Activity className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h4 className="text-white font-bold text-lg mb-2">Exámenes de Sangre Básicos</h4>
+                <p className="text-neutral-400">Requerimos exámenes recientes de colesterol, glucosa y triglicéridos.</p>
+              </div>
+            </div>
+
+            <div className="flex gap-4">
+              <div className="bg-primary/10 p-3 h-fit rounded-lg">
+                <ShieldCheck className="w-6 h-6 text-primary" />
+              </div>
+              <div>
+                <h4 className="text-white font-bold text-lg mb-2">Colaboración Médica</h4>
+                <p className="text-neutral-400">Si es necesario, trabajaré directamente con tu médico de cabecera.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-neutral-800">
+            <p className="text-white font-medium italic">
+              "De esta forma, garantizamos que cada decisión en tu plan se base en datos reales, monitoreando la evolución de tu salud interna."
+            </p>
+          </div>
         </div>
 
         {/* Comparison Chart - Desktop */}

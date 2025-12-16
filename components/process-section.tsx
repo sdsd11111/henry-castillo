@@ -14,37 +14,35 @@ const steps = [
         title: "Evaluación Inicial y Diagnóstico",
         description: "Comenzamos con una entrevista profunda (presencial o virtual) para conocer tu historial, tus objetivos y tu estilo de vida. No lanzamos rutinas al azar; primero entendemos tu punto de partida.",
         icon: MessageSquareText,
-        image: "/images/513249579-4119168998354039-2382360676927873571-n.jpg"
+        image: "/images/Linea de tiempo/1.webp"
     },
     {
         number: "02",
         title: "Análisis de Marcadores Internos",
         description: "Como parte de mi protocolo de Entrenador Personal, te solicitaré exámenes básicos (colesterol, glucosa, triglicéridos). Estos datos me permiten diseñar un plan que respete y potencie tu metabolismo y salud cardiovascular.",
         icon: TestTube2,
-        image: "/images/503891860-4098892280381711-848031671112462455-n.jpg"
+        image: "/images/Linea de tiempo/2.webp"
     },
     {
         number: "03",
         title: "Diseño del Plan Integral",
         description: "Construyo tu hoja de ruta personalizada. Entrenamiento ajustado a tu nivel (principiante presencial o experto online) y un plan de alimentación inteligente vinculado a tus resultados médicos.",
         icon: FileText,
-        image: "/images/502903707-4097245297213076-1836789078342719368-n.jpg"
+        image: "/images/Linea de tiempo/3.webp"
     },
     {
         number: "04",
         title: "Ejecución y Ajuste Quincenal",
         description: "Iniciamos el entrenamiento. Cada 15 días realizamos una evaluación de progreso para ajustar cargas, calorías y técnica. El seguimiento es constante para garantizar la adherencia.",
         icon: Dumbbell,
-        image: "/images/503984705-4097457117191894-5670764605460021442-n.jpg"
+        image: "/images/Linea de tiempo/4.webp"
     },
     {
         number: "05",
         title: "Validación de Resultados",
         description: "Realizamos nuevos controles médicos (cada 3 meses) para verificar cómo ha mejorado tu funcionamiento interno. Aquí es donde celebramos no solo los kilos perdidos, sino tu nueva vitalidad.",
         icon: Trophy,
-        // Reusing the first high-quality image or another if available. 
-        // Ideally we would have a 'Success/Trophy' image. reusing 50389... for now as it looks professional.
-        image: "/images/513249579-4119168998354039-2382360676927873571-n.jpg"
+        image: "/images/Linea de tiempo/5.webp"
     },
 ]
 

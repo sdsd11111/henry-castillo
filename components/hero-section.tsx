@@ -6,6 +6,7 @@ import { EvaluationModal } from "@/components/evaluation-modal"
 import { Calendar, ClipboardCheck, ChevronDown } from "lucide-react"
 import Image from "next/image"
 import { CONTACT } from "@/lib/constants"
+import { NewsletterForm } from "@/components/newsletter-form"
 
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -29,106 +30,154 @@ export function HeroSection() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/503891860-4098892280381711-848031671112462455-n.jpg"
+            src="/images/hero.webp"
             alt=""
             fill
             className="object-cover object-top"
             priority
             aria-hidden="true"
           />
-          <div className="absolute inset-0 bg-black/50" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
         </div>
 
         {/* Content */}
-        <div className="relative z-10 container mx-auto px-4">
-          <div className="max-w-5xl mx-auto space-y-6 md:space-y-10 flex flex-col items-center text-center w-full">
-            <h1
-              id="hero-heading"
-              className={`text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-none text-white uppercase tracking-tight transition-all duration-700 delay-100 drop-shadow-2xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
-              ENTRENADOR <span className="text-primary drop-shadow-[0_0_25px_rgba(0,255,255,0.6)]">PERSONAL</span> <br className="hidden sm:block" /> LOJA
-            </h1>
+        <div className="relative z-10 container mx-auto px-4 h-full flex flex-col justify-center pt-32 md:pt-0">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-8 lg:gap-16 items-center w-full max-w-7xl mx-auto">
 
-            <div
-              className={`max-w-2xl px-2 transition-all duration-700 delay-200 drop-shadow-md ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
-              <p className="text-base sm:text-xl text-white/90 leading-relaxed text-center font-light">
-                ¿Quieres resultados que te mantengan activo y productivo a largo plazo? Soy Henry Castillo, y mi rol como Entrenador Personal es garantizar que tu esfuerzo dé frutos.
-                {!isExpanded && (
-                  <button
-                    onClick={() => setIsExpanded(true)}
-                    className="ml-2 text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
-                  >
-                    Seguir leyendo
-                  </button>
-                )}
-                {isExpanded && (
-                  <span> Mi metodología es integral: optimizo tu rendimiento y tu nutrición basándome en tus datos de salud. No solo te verás fuerte; estarás sano por dentro. Invierte hoy en el bienestar que agradecerás a los 60 años.
-                    <button
-                      onClick={() => setIsExpanded(false)}
-                      className="ml-2 text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
-                    >
-                      Ocultar
-                    </button>
-                  </span>
-                )}
-              </p>
-            </div>
-
-            {/* CTAs */}
-            <div
-              className={`w-full max-w-sm sm:max-w-none flex flex-col sm:flex-row gap-4 pt-4 justify-center transition-all duration-700 delay-300 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
-              <Button
-                size="lg"
-                className="text-base md:text-lg px-6 py-6 md:px-8 md:py-6 gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold w-full sm:w-auto shadow-lg shadow-primary/25"
-                onClick={() => setIsModalOpen(true)}
-                aria-haspopup="dialog"
+            {/* Left Column - Main Info */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left space-y-1 md:space-y-8">
+              <h1
+                id="hero-heading"
+                className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] text-white uppercase tracking-tighter transition-all duration-700 delay-100 drop-shadow-2xl ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
               >
-                <ClipboardCheck className="h-5 w-5" aria-hidden="true" />
-                Evaluación Gratuita
-              </Button>
+                ENTRENADOR <span className="text-primary drop-shadow-[0_0_25px_rgba(0,255,255,0.6)]">PERSONAL</span> <br /> LOJA
+              </h1>
 
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-base md:text-lg px-6 py-6 md:px-8 md:py-6 gap-2 border-white/30 hover:bg-white/10 bg-white/5 backdrop-blur-sm text-white font-semibold w-full sm:w-auto overflow-hidden text-ellipsis whitespace-nowrap"
-                asChild
+              <div
+                className={`max-w-xl transition-all duration-700 delay-200 drop-shadow-md ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
               >
-                <a
-                  href={CONTACT.whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Contáctame por WhatsApp (abre en nueva ventana)"
+                <div className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-light space-y-2">
+                  {/* Mobile View: Only Location */}
+                  <div className="block md:hidden pb-1">
+                    <p className="font-medium text-white/90 text-sm">
+                      📍 Presencial en Loja | 🌎 Online para todo el mundo.
+                    </p>
+                  </div>
+
+                  {/* Desktop View: Full Bio */}
+                  <div className="hidden md:block">
+                    <p>
+                      <strong className="block text-white mb-2">¿Buscas resultados duraderos?</strong>
+                      Soy Henry Castillo. Como Entrenador Personal, garantizo que tu esfuerzo dé frutos reales.
+                    </p>
+
+                    {!isExpanded && (
+                      <button
+                        onClick={() => setIsExpanded(true)}
+                        className="text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
+                      >
+                        Seguir leyendo
+                      </button>
+                    )}
+
+                    {isExpanded && (
+                      <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 text-justify">
+                          <p className="text-white/90">
+                            Metodología integral: Nutrición y entrenamiento basados en tu salud. No solo fuerza, sino bienestar a largo plazo.
+                          </p>
+                          <p className="text-white/90 mt-4 border-t border-white/10 pt-4 font-medium">
+                            📍 Presencial en Loja | 🌎 Online para todo el mundo.
+                          </p>
+                        </div>
+
+                        <button
+                          onClick={() => setIsExpanded(false)}
+                          className="text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
+                        >
+                          Ocultar
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* CTAs */}
+              <div
+                className={`flex flex-col sm:flex-row gap-4 pt-1 transition-all duration-700 delay-300 w-full sm:w-auto ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
+              >
+                <Button
+                  size="lg"
+                  className="text-base md:text-lg px-8 py-6 gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25"
+                  onClick={() => setIsModalOpen(true)}
+                  aria-haspopup="dialog"
                 >
-                  <span className="relative flex h-3 w-3 mr-1 shrink-0" aria-hidden="true">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                  </span>
-                  Contáctame por WhatsApp
-                </a>
-              </Button>
+                  <ClipboardCheck className="h-5 w-5" aria-hidden="true" />
+                  Evaluación Gratuita
+                </Button>
+              </div>
+
+              <div
+                className={`hidden lg:flex items-center gap-8 pt-4 text-white/80 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  }`}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-primary font-bold text-3xl drop-shadow-md">100%</span>
+                  <span className="drop-shadow-sm text-sm uppercase tracking-widest">Personalizado</span>
+                </div>
+                <div className="h-8 w-px bg-white/30" aria-hidden="true" />
+                <div className="flex items-center gap-3">
+                  <span className="text-primary font-bold text-3xl drop-shadow-md">Online</span>
+                  <span className="drop-shadow-sm text-sm uppercase tracking-widest">y Presencial</span>
+                </div>
+              </div>
             </div>
 
-            <div
-              className={`flex flex-wrap items-center justify-center gap-6 sm:gap-8 pt-6 text-sm md:text-base text-white/80 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                }`}
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-primary font-bold text-2xl sm:text-3xl drop-shadow-md">100%</span>
-                <span className="drop-shadow-sm">Personalizado</span>
+            {/* Right Column - Newsletter */}
+            <div className={`flex flex-col items-center lg:items-center text-center space-y-4 md:space-y-6 transition-all duration-700 delay-500 scale-75 md:scale-100 origin-top md:origin-center ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
+              }`}>
+              <div className="space-y-2 max-w-md">
+                <h2 className="text-xl md:text-3xl font-bold text-white leading-tight">
+                  Henry Castillo
+                  <span className="block text-primary text-lg md:text-2xl font-normal mt-1">Entrenador personal y online</span>
+                </h2>
+                <p className="text-white/80 font-light text-sm md:text-base">
+                  Suscríbete a mi newsletter comparto consejos fitness todos los jueves.
+                </p>
               </div>
-              <div className="hidden sm:block h-8 w-px bg-white/30" aria-hidden="true" />
-              <div className="flex items-center gap-3">
-                <span className="text-primary font-bold text-2xl sm:text-3xl drop-shadow-md">Online</span>
-                <span className="drop-shadow-sm">y Presencial</span>
+
+              <div className="w-full max-w-sm md:max-w-md">
+                <NewsletterForm />
+              </div>
+
+              <div className="lg:hidden w-full pt-8 flex justify-center">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-base px-6 py-6 gap-2 border-white/30 hover:bg-white/10 bg-white/5 backdrop-blur-sm text-white font-semibold w-full max-w-sm"
+                  asChild
+                >
+                  <a
+                    href={CONTACT.whatsappLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="relative flex h-3 w-3 mr-1 shrink-0">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    </span>
+                    Contáctame por WhatsApp
+                  </a>
+                </Button>
               </div>
             </div>
+
           </div>
         </div>
 

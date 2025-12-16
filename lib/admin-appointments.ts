@@ -97,3 +97,18 @@ export async function deleteAppointment(id: number) {
   await query(sql, [id])
   return { id }
 }
+/**
+ * Actualiza la fecha y hora de una cita
+ */
+export async function updateAppointment(id: number, fecha: string, hora: string) {
+  const sql = `
+    UPDATE appointments
+    SET fecha = ?, hora = ?
+    WHERE id = ?
+  `
+  // fecha: YYYY-MM-DD
+  // hora: HH:mm:ss
+
+  await query(sql, [fecha, hora, id])
+  return { id, fecha, hora }
+}

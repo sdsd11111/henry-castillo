@@ -1,6 +1,7 @@
 "use client"
 
-import { Plus, MessageCircle } from "lucide-react"
+import { useState } from "react"
+import { Plus, Calendar, ArrowRight } from "lucide-react"
 import {
     Accordion,
     AccordionContent,
@@ -8,6 +9,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Button } from "@/components/ui/button"
+import { EvaluationModal } from "@/components/evaluation-modal"
 
 const faqs = [
     {
@@ -37,6 +39,8 @@ const faqs = [
 ]
 
 export function FaqSection() {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
     return (
         <section className="py-24 bg-zinc-950" aria-labelledby="faq-heading">
             <div className="container mx-auto px-4 max-w-4xl">
@@ -86,23 +90,17 @@ export function FaqSection() {
                 {/* CTA */}
                 <div className="flex justify-center w-full">
                     <Button
-                        asChild
-                        variant="default"
                         size="lg"
                         className="bg-primary text-black hover:bg-primary/90 font-bold text-xs md:text-base w-full sm:w-auto h-auto px-4 py-4 md:px-8 md:py-6 whitespace-normal tracking-wide shadow-[0_0_20px_rgba(0,255,255,0.3)] hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transition-all duration-300"
+                        onClick={() => setIsModalOpen(true)}
                     >
-                        <a
-                            href="https://wa.me/593988626504"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 uppercase text-center"
-                        >
-                            <MessageCircle className="w-5 h-5 shrink-0" />
-                            <span className="leading-snug">¿Tienes otra pregunta? Escríbeme directamente por WhatsApp</span>
-                        </a>
+                        <Calendar className="w-5 h-5 mr-2 shrink-0" />
+                        <span className="leading-snug">¿Tienes más dudas? Reserva una sesión para resolverlas</span>
                     </Button>
                 </div>
             </div>
+
+            <EvaluationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </section>
     )
 }

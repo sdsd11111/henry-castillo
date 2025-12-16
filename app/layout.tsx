@@ -27,13 +27,26 @@ export const metadata: Metadata = {
   },
   description: "Entrenamiento personal científico e integral en Loja, Ecuador. Transforma tu físico y vitalidad con planes de nutrición y ejercicio personalizados.",
   keywords: [
+    "Nutrición deportiva Loja",
+    "Plan de alimentación personalizado",
     "Entrenador personal Loja",
     "Henry Castillo",
+    "Coach fitness",
+    "Entrenamiento personalizado",
     "Entrenamiento online",
     "Fitness Ecuador",
     "Nutrición deportiva",
     "Pérdida de grasa",
     "Ganancia muscular",
+    "Plan de entrenamiento personalizado",
+    "Rutina de entrenamiento",
+    "Entrenamiento en Loja",
+    "Rutina de ejercicios online",
+    "Planificación de entrenamiento",
+    "Rutina personalizada",
+    "Entrenamiento presencial",
+    "Corrección postural",
+    "Plan de entrenamiento",
     "Evaluación física integral"
   ],
   authors: [{ name: "Henry Castillo" }],
@@ -47,7 +60,7 @@ export const metadata: Metadata = {
     siteName: "Henry Castillo Team",
     images: [
       {
-        url: "/Logo%20Henry.webp", // URL Encoded for spaces
+        url: "/Logo Henry.webp",
         width: 800,
         height: 600,
         alt: "Logo Henry Castillo - Entrenador Personal",
@@ -58,7 +71,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Henry Castillo - Entrenador Personal en Loja",
     description: "Entrenamiento personal científico e integral en Loja, Ecuador.",
-    images: ["/Logo%20Henry.webp"],
+    images: ["/Logo Henry.webp"],
   },
   robots: {
     index: true,
