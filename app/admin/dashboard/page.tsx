@@ -13,6 +13,7 @@ import { format, parseISO } from "date-fns"
 import { es } from "date-fns/locale"
 import { AvailabilityForm } from "@/components/admin/availability-form"
 import { CalendarBooking } from "@/components/calendar-booking"
+import { NewsletterManager } from "@/components/admin/newsletter-manager"
 
 interface Appointment {
     id: number
@@ -242,6 +243,10 @@ export default function AdminDashboardPage() {
                             <Settings className="h-4 w-4" />
                             Configuración
                         </TabsTrigger>
+                        <TabsTrigger value="newsletter" className="flex gap-2">
+                            <Mail className="h-4 w-4" />
+                            Newsletter
+                        </TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="config">
@@ -254,6 +259,10 @@ export default function AdminDashboardPage() {
                                 <AvailabilityForm />
                             </CardContent>
                         </Card>
+                    </TabsContent>
+
+                    <TabsContent value="newsletter">
+                        <NewsletterManager />
                     </TabsContent>
 
                     <TabsContent value="citas" className="space-y-6">
