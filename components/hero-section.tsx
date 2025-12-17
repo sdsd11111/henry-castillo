@@ -31,7 +31,7 @@ export function HeroSection() {
         <div className="absolute inset-0 z-0">
           <Image
             src="/images/hero.webp"
-            alt=""
+            alt="Henry Castillo Entrenador Personal en Loja entrenando a cliente"
             fill
             className="object-cover object-top"
             priority

@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: '/private/',
+            disallow: ['/private/', '/admin/'],
         },
-        sitemap: 'http://teamhenrycastillo.com/sitemap.xml',
+        sitemap: 'https://teamhenrycastillo.com/sitemap.xml',
     }
 }

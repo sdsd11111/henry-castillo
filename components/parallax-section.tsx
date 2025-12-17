@@ -52,7 +52,7 @@ export function ParallaxSection() {
       <div className="absolute inset-0 z-0" style={{ transform: `translateY(${offsetY}px)` }} aria-hidden="true">
         <Image
           src="/images/503984705-4097457117191894-5670764605460021442-n.jpg"
-          alt=""
+          alt="Entrenamiento grupal al aire libre en Loja - Henry Castillo Team"
           fill
           className="object-cover scale-125 grayscale"
           loading="lazy"

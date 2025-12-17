@@ -61,9 +61,8 @@ export function TestimonialsSection() {
     >
       <div className="container mx-auto px-4">
         <div
-          className={`max-w-3xl mx-auto text-center mb-10 md:mb-12 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`max-w-3xl mx-auto text-center mb-10 md:mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            }`}
         >
           <p className="text-primary font-semibold uppercase tracking-wide mb-2 text-sm">Resultados reales</p>
           <h2 id="testimonials-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-white">
@@ -78,16 +77,15 @@ export function TestimonialsSection() {
           {testimonials.map((testimonial, index) => (
             <article
               key={testimonial.id}
-              className={`group relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-3xl overflow-hidden border border-zinc-800 hover:border-primary/50 transition-all duration-500 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
+              className={`group relative bg-gradient-to-br from-zinc-900 to-zinc-950 rounded-3xl overflow-hidden border border-zinc-800 hover:border-primary/50 transition-all duration-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
               style={{ transitionDelay: `${(index + 1) * 150}ms` }}
             >
               {/* Image section */}
               <div className="relative h-48 overflow-hidden">
                 <Image
                   src={testimonial.image || "/placeholder.svg"}
-                  alt=""
+                  alt={`Transformación física - ${testimonial.highlight}`}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                   loading="lazy"
@@ -107,9 +105,8 @@ export function TestimonialsSection() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-4 h-4 ${
-                        i < testimonial.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-600"
-                      }`}
+                      className={`w-4 h-4 ${i < testimonial.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-600"
+                        }`}
                       aria-hidden="true"
                     />
                   ))}

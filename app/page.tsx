@@ -27,41 +27,8 @@ export default function Home() {
       <Footer />
       <WhatsAppFloatingButton />
 
-      {/* LLM / Crawler Visibility Content (Visually Hidden) */}
-      <div
-        style={{
-          position: 'absolute',
-          width: '1px',
-          height: '1px',
-          padding: '0',
-          margin: '-1px',
-          overflow: 'hidden',
-          clip: 'rect(0, 0, 0, 0)',
-          whiteSpace: 'nowrap',
-          borderWidth: '0'
-        }}
-        aria-hidden="true"
-      >
-        <h1>Henry Castillo - Entrenador Personal en Loja, Ecuador</h1>
-        <p>
-          Transforma tu físico y salud con un enfoque científico integral.
-          Servicios de entrenamiento personal presencial en Loja y asesoría online global.
-        </p>
-        <h2>Servicios Principales</h2>
-        <ul>
-          <li>Entrenamiento Personalizado Presencial (Loja)</li>
-          <li>Asesoría Online para Pérdida de Grasa y Ganancia Muscular</li>
-          <li>Planes de Nutrición Basados en Ciencia (Análisis de Sangre, Escala de Bristol)</li>
-          <li>Evaluación Física Integral y Composición Corporal</li>
-        </ul>
-        <h2>Ubicación y Contacto</h2>
-        <p>Ubicación: Loja, Ecuador.</p>
-        <p>WhatsApp: +593 98 656 2727</p>
-        <p>Email: contacto@henrycastillo.com</p>
-        <h2>Preguntas Frecuentes</h2>
-        <p>¿Por qué exámenes médicos? Para diseñar un plan seguro basado en tu perfil metabólico.</p>
-        <p>¿Qué es la Escala de Bristol? Una herramienta para evaluar tu salud digestiva y absorción de nutrientes.</p>
-      </div>
+      {/* LLM / Crawler Visibility Content - Visually Hidden content removed to avoid cloaking penalties. 
+           Relevant keywords are now part of the visible content and structured data. */}
     </main>
   )
 }
