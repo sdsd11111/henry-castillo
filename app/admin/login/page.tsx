@@ -68,6 +68,7 @@ export default function AdminLoginPage() {
                                     className="pl-10"
                                     required
                                     disabled={loading}
+                                    autoComplete="username"
                                 />
                             </div>
                         </div>
@@ -85,6 +86,7 @@ export default function AdminLoginPage() {
                                     className="pl-10"
                                     required
                                     disabled={loading}
+                                    autoComplete="current-password"
                                 />
                             </div>
                         </div>
