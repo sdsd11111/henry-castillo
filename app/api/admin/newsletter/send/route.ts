@@ -11,10 +11,13 @@ export async function POST(request: Request) {
         try {
             await transporter.verify()
             console.log("SMTP Connection verified successfully")
-        } catch (verifyError) {
+        } catch (verifyError: any) {
             console.error("SMTP Connection Verification Failed:", verifyError)
             return NextResponse.json(
-                { error: 'Error de conexión con el servidor de correo. Revise la configuración SMTP.' },
+                {
+                    error: `Error de conexión SMTP: ${verifyError.message || verifyError}`,
+                    details: verifyError
+                },
                 { status: 500 }
             )
         }
