@@ -1,23 +1,24 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
-import nodemailer from 'nodemailer'
+import { transporter } from '@/lib/email'
 
-// Reusing the transporter config logic from lib/email.ts
-// Ideally we should export 'transporter' from lib/email.ts, but to avoid touching that file excessively I'll recreate it locally or update lib/email.ts.
-// Let's configure it here to ensure it works with the specific .env variables.
-
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST || 'smtp.teamhenrycastillo.com',
-    port: Number(process.env.SMTP_PORT) || 465,
-    secure: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-})
+// Reusing the transporter from lib/email.ts to ensure consistent config
 
 export async function POST(request: Request) {
+    console.log("Starting newsletter send process...")
     try {
+        // Verify connection configuration
+        try {
+            await transporter.verify()
+            console.log("SMTP Connection verified successfully")
+        } catch (verifyError) {
+            console.error("SMTP Connection Verification Failed:", verifyError)
+            return NextResponse.json(
+                { error: 'Error de conexión con el servidor de correo. Revise la configuración SMTP.' },
+                { status: 500 }
+            )
+        }
+
         const formData = await request.formData()
         const subject = formData.get("subject") as string
         const message = formData.get("message") as string
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
         }
 
         // Process attachments
-        const attachments = []
+        const attachments: { filename: string; content: Buffer; contentType: string }[] = []
         if (files && files.length > 0) {
             for (const file of files) {
                 if (file.size > 0) {
