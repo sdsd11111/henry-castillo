@@ -18,8 +18,8 @@ export function Footer() {
               <div className="flex items-center gap-3">
                 <div className="relative h-10 w-auto">
                   <img
-                    src="/Logo Henry.webp"
-                    alt="Logo Henry Castillo"
+                    src="/og-image.webp"
+                    alt="Henry Castillo - Entrenador Personal"
                     className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
                   />
                 </div>

@@ -63,10 +63,10 @@ export const metadata: Metadata = {
     siteName: "Henry Castillo Team",
     images: [
       {
-        url: "/Logo Henry.webp",
-        width: 800,
-        height: 600,
-        alt: "Logo Henry Castillo - Entrenador Personal",
+        url: "/og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "Henry Castillo - Entrenador Personal en Loja",
       },
     ],
   },
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Henry Castillo - Entrenador Personal en Loja",
     description: "Entrenamiento inteligente y nutrición basada en ciencia. Empieza tu cambio hoy.",
-    images: ["/Logo Henry.webp"],
+    images: ["/og-image.webp"],
   },
   robots: {
     index: true,
@@ -88,12 +88,18 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/Logo Henry.ico",
-    shortcut: "/Logo Henry.ico",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
     apple: "/apple-icon.png",
   },
   generator: 'Next.js',
   applicationName: 'Henry Castillo Fitness',
+  other: {
+    'geo.region': 'EC-L',
+    'geo.placename': 'Loja',
+    'geo.position': '-3.99313;-79.20422',
+    'ICBM': '-3.99313, -79.20422',
+  },
 }
 
 export const viewport: Viewport = {
@@ -128,7 +134,7 @@ export default function RootLayout({
         "@type": "LocalBusiness",
         "@id": "https://teamhenrycastillo.com/#business",
         "name": "Henry Castillo Team",
-        "image": "https://teamhenrycastillo.com/Logo Henry.webp",
+        "image": "https://teamhenrycastillo.com/og-image.webp",
         "url": "https://teamhenrycastillo.com",
         "telephone": "+593986562727",
         "priceRange": "$$",
@@ -143,6 +149,17 @@ export default function RootLayout({
           "latitude": -3.99313,
           "longitude": -79.20422
         },
+        "areaServed": {
+          "@type": "City",
+          "name": "Loja",
+          "containedIn": {
+            "@type": "Country",
+            "name": "Ecuador"
+          }
+        },
+        "hasMap": "https://www.google.com/maps/place/-3.99313,-79.20422",
+        "currenciesAccepted": "USD",
+        "paymentAccepted": "Cash, Transferencia bancaria",
         "openingHoursSpecification": [
           {
             "@type": "OpeningHoursSpecification",
@@ -208,6 +225,68 @@ export default function RootLayout({
             }
           }
         ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://teamhenrycastillo.com/#service-training",
+        "serviceType": "Entrenamiento Personal",
+        "provider": {
+          "@id": "https://teamhenrycastillo.com/#business"
+        },
+        "areaServed": {
+          "@type": "City",
+          "name": "Loja"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Servicios de Entrenamiento",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Entrenamiento Presencial en Loja",
+                "description": "Entrenamiento personal científico e integral en Loja, Ecuador"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Asesoría Online",
+                "description": "Programación de entrenamiento y nutrición a distancia para atletas"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Nutrición Deportiva",
+                "description": "Planes de alimentación personalizados basados en análisis médicos"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://teamhenrycastillo.com/#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Inicio",
+            "item": "https://teamhenrycastillo.com/"
+          }
+        ]
+      },
+      {
+        "@type": "AggregateRating",
+        "@id": "https://teamhenrycastillo.com/#rating",
+        "ratingValue": "5.0",
+        "reviewCount": "9",
+        "bestRating": "5",
+        "worstRating": "1"
       }
     ]
   }

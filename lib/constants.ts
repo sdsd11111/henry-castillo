@@ -12,7 +12,7 @@ export const SITE = {
   title: "Henry Castillo | Entrenador Personal & Online",
   description:
     "Transforma tu cuerpo con ciencia, experiencia y sentido común. Entrenamiento personalizado online y presencial en Loja, Ecuador. Sin dietas extremas, sin rutinas imposibles.",
-  url: "https://henrycastillo.fit", // Actualizar con dominio real
+  url: "https://teamhenrycastillo.com",
   locale: "es_EC",
 } as const
 

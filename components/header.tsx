@@ -35,8 +35,8 @@ export function Header() {
           <a href="#" className="flex items-center gap-3 group" aria-label="Ir al inicio">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/Logo Henry.webp"
-              alt="Logo Henry Castillo"
+              src="/og-image.webp"
+              alt="Henry Castillo - Entrenador Personal"
               className="h-10 w-auto object-contain transition-transform group-hover:scale-105"
             />
             <span className="text-xl md:text-2xl font-bold text-white group-hover:text-primary transition-colors tracking-tight">
