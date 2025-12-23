@@ -7,47 +7,42 @@ import Image from "next/image"
 import { CONTACT } from "@/lib/constants"
 import { MotionConfig, motion, AnimatePresence } from "framer-motion"
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog"
+import { EvaluationModal } from "@/components/evaluation-modal"
 
 const steps = [
     {
         number: "01",
-        title: "Evaluación Inicial y Diagnóstico",
-        description: "Comenzamos con una entrevista profunda (presencial o virtual) para conocer tu historial, tus objetivos y tu estilo de vida. No lanzamos rutinas al azar; primero entendemos tu punto de partida.",
+        title: "Nos conocemos",
+        description: "Antes de empezar haremos una pequeña reunión de 40 minutos para asegurarnos que te puedo ayudar y que los objetivos planteados son realistas.",
         icon: MessageSquareText,
         image: "/images/Linea de tiempo/1.webp"
     },
     {
         number: "02",
-        title: "Análisis de Marcadores Internos",
-        description: "Como parte de mi protocolo de Entrenador Personal, te solicitaré exámenes básicos (colesterol, glucosa, triglicéridos). Estos datos me permiten diseñar un plan que respete y potencie tu metabolismo y salud cardiovascular.",
-        icon: TestTube2,
+        title: "Cuestionario inicial",
+        description: "Si decidimos trabajar juntos y una vez el pago está confirmado, rellenarás un cuestionario detallado que me servirá para realizar toda la planificación.",
+        icon: FileText,
         image: "/images/Linea de tiempo/2.webp"
     },
     {
         number: "03",
-        title: "Diseño del Plan Integral",
-        description: "Construyo tu hoja de ruta personalizada. Entrenamiento ajustado a tu nivel (principiante presencial o experto online) y un plan de alimentación inteligente vinculado a tus resultados médicos.",
-        icon: FileText,
+        title: "Empezamos",
+        description: "Te prepararé toda la planificación durante las 24-48 horas siguientes. Todo estará adaptado a tus necesidades, horarios y preferencias que me hayas indicado. Nos reuniremos para explicar a detalle la planificación y solucionar todas las dudas antes de empezar.",
+        icon: Dumbbell,
         image: "/images/Linea de tiempo/3.webp"
     },
     {
         number: "04",
-        title: "Ejecución y Ajuste Quincenal",
-        description: "Iniciamos el entrenamiento. Cada 15 días realizamos una evaluación de progreso para ajustar cargas, calorías y técnica. El seguimiento es constante para garantizar la adherencia.",
-        icon: Dumbbell,
-        image: "/images/Linea de tiempo/4.webp"
-    },
-    {
-        number: "05",
-        title: "Validación de Resultados",
-        description: "Realizamos nuevos controles médicos (cada 3 meses) para verificar cómo ha mejorado tu funcionamiento interno. Aquí es donde celebramos no solo los kilos perdidos, sino tu nueva vitalidad.",
+        title: "Chequeos quincenales",
+        description: "Cada dos semanas tu trabajo será rellenar unas tablas de seguimiento y responder unas preguntas breves en tu carpeta de cliente. Mi trabajo consistirá en evaluar el progreso, hacer modificaciones siempre que sean necesarias y seguir avanzando hacia tus objetivos.",
         icon: Trophy,
-        image: "/images/Linea de tiempo/5.webp"
+        image: "/images/Linea de tiempo/4.webp"
     },
 ]
 
 export function ProcessSection() {
     const [activeStep, setActiveStep] = useState(0)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
     return (
         <section className="py-24 bg-zinc-950 relative overflow-hidden" aria-labelledby="process-heading">
@@ -55,166 +50,79 @@ export function ProcessSection() {
             <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
             <div className="container mx-auto px-4">
-
-                {/* Header - Centered & Full Width */}
+                {/* Header */}
                 <div className="max-w-4xl mx-auto text-center mb-16 space-y-6">
                     <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest border border-primary/20">
                         Proceso / Cómo funciona
                     </span>
                     <h2 id="process-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-                        Tu Camino hacia un Rendimiento Superior: <br className="hidden md:block" />
-                        <span className="text-primary">Paso a Paso</span>
+                        Así será tu <span className="text-primary">proceso de entrenamiento conmigo</span>
                     </h2>
                     <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto">
                         Un método claro y basado en datos para asegurar que alcances tus metas con total seguridad.
                     </p>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-12 xl:gap-24">
-
-                    {/* Left Column: Sticky Image with Transition */}
-                    <div className="lg:w-1/2 relative lg:sticky lg:top-32 h-fit min-h-[500px] hidden lg:block">
-                        <div className="relative rounded-3xl overflow-hidden aspect-[4/5] shadow-2xl border border-zinc-800 bg-zinc-900">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={activeStep}
-                                    initial={{ opacity: 0, scale: 1.05 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0 }}
-                                    transition={{ duration: 0.5 }}
-                                    className="absolute inset-0"
+                <div className="max-w-3xl mx-auto w-full">
+                    {/* Timeline */}
+                    <div className="relative space-y-6 pl-8 sm:pl-10 before:absolute before:left-[15px] sm:before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-zinc-800">
+                        {steps.map((step, index) => (
+                            <div key={index} className="relative group">
+                                {/* Timeline Dot */}
+                                <div
+                                    className={`absolute -left-[45px] sm:-left-[53px] w-8 h-8 sm:w-10 sm:h-10 rounded-full border-4 flex items-center justify-center z-10 transition-colors duration-300 ${activeStep === index
+                                        ? "bg-zinc-950 border-primary shadow-[0_0_15px_rgba(0,255,255,0.5)] cursor-default"
+                                        : "bg-zinc-950 border-zinc-700 cursor-pointer group-hover:border-neutral-500"
+                                        }`}
+                                    onClick={() => setActiveStep(index)}
                                 >
-                                    <Image
-                                        src={steps[activeStep].image}
-                                        alt={steps[activeStep].title}
-                                        fill
-                                        className="object-cover"
-                                        priority
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                                    <div className="absolute bottom-8 left-8 right-8">
-                                        <div className="flex items-center gap-3 mb-2">
-                                            <div className="bg-primary/20 p-2 rounded-full backdrop-blur-sm">
-                                                {/* Render the icon dynamically */}
-                                                {(() => {
-                                                    const Icon = steps[activeStep].icon;
-                                                    return <Icon className="w-5 h-5 text-primary" />;
-                                                })()}
-                                            </div>
-                                            <span className="text-primary font-bold tracking-wider uppercase text-sm">Paso {steps[activeStep].number}</span>
-                                        </div>
-                                        <p className="text-white font-bold text-2xl leading-tight">
-                                            {steps[activeStep].title}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-                    </div>
-
-                    {/* Right Column: Interactive Timeline */}
-                    <div className="lg:w-1/2">
-                        <div className="relative space-y-4 pl-8 lg:pl-10 before:absolute before:left-[15px] lg:before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-zinc-800">
-                            {steps.map((step, index) => (
-                                <div key={index} className="relative group">
-                                    {/* Timeline Dot */}
-                                    <div
-                                        className={`absolute -left-[45px] lg:-left-[53px] w-8 h-8 lg:w-10 lg:h-10 rounded-full border-4 flex items-center justify-center z-10 transition-colors duration-300 ${activeStep === index
-                                            ? "bg-zinc-950 border-primary shadow-[0_0_15px_rgba(0,255,255,0.5)] cursor-default"
-                                            : "bg-zinc-950 border-zinc-700 cursor-pointer group-hover:border-neutral-500"
-                                            }`}
-                                        onClick={() => setActiveStep(index)}
-                                    >
-                                        <div className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-colors duration-300 ${activeStep === index ? "bg-primary" : "bg-zinc-600 group-hover:bg-neutral-400"}`} />
-                                    </div>
-
-                                    {/* Desktop Interaction: Updates Sticky Image */}
-                                    <div
-                                        onClick={() => setActiveStep(index)}
-                                        className={`hidden lg:block p-6 rounded-2xl border transition-all duration-300 cursor-pointer ${activeStep === index
-                                            ? "bg-zinc-900 border-primary/30 shadow-lg shadow-primary/5 scale-[1.02]"
-                                            : "bg-zinc-900/30 border-zinc-800/50 hover:bg-zinc-900/50 hover:border-zinc-700"
-                                            }`}
-                                    >
-                                        <div className="flex items-center gap-4 mb-3">
-                                            <div className={`p-2 rounded-lg transition-colors duration-300 ${activeStep === index ? "bg-primary/20 text-primary" : "bg-zinc-800 text-zinc-500"}`}>
-                                                <step.icon className="w-5 h-5" />
-                                            </div>
-                                            <span className={`text-2xl font-black transition-colors duration-300 ${activeStep === index ? "text-primary opacity-100" : "text-white opacity-20"}`}>
-                                                {step.number}
-                                            </span>
-                                        </div>
-
-                                        <h3 className={`text-lg font-bold mb-2 transition-colors duration-300 ${activeStep === index ? "text-white" : "text-neutral-400"}`}>
-                                            {step.title}
-                                        </h3>
-
-                                        <p className={`leading-relaxed text-sm transition-colors duration-300 ${activeStep === index ? "text-neutral-300" : "text-neutral-600"}`}>
-                                            {step.description}
-                                        </p>
-                                    </div>
-
-                                    {/* Mobile Interaction: Opens Lightbox */}
-                                    <Dialog>
-                                        <DialogTrigger asChild>
-                                            <div
-                                                className={`lg:hidden p-6 rounded-2xl border transition-all duration-300 cursor-pointer ${activeStep === index
-                                                    ? "bg-zinc-900 border-primary/30 shadow-lg shadow-primary/5"
-                                                    : "bg-zinc-900/30 border-zinc-800/50"
-                                                    }`}
-                                            >
-                                                <div className="flex items-center gap-4 mb-3">
-                                                    <div className={`p-2 rounded-lg ${activeStep === index ? "bg-primary/20 text-primary" : "bg-zinc-800 text-zinc-500"}`}>
-                                                        <step.icon className="w-5 h-5" />
-                                                    </div>
-                                                    <span className={`text-2xl font-black ${activeStep === index ? "text-primary opacity-100" : "text-white opacity-20"}`}>
-                                                        {step.number}
-                                                    </span>
-                                                </div>
-                                                <h3 className="text-lg font-bold mb-2 text-white">
-                                                    {step.title}
-                                                </h3>
-                                                <p className="leading-relaxed text-sm text-neutral-400">
-                                                    {step.description}
-                                                </p>
-                                                <p className="text-primary text-xs font-bold uppercase tracking-wider mt-4">
-                                                    Ver detalle +
-                                                </p>
-                                            </div>
-                                        </DialogTrigger>
-                                        <DialogContent className="bg-zinc-900 border-zinc-800 p-0 overflow-hidden max-w-sm sm:max-w-md">
-                                            <DialogTitle className="sr-only">{step.title}</DialogTitle>
-                                            <div className="relative aspect-[4/5] w-full">
-                                                <Image
-                                                    src={step.image}
-                                                    alt={step.title}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                        </DialogContent>
-                                    </Dialog>
-
+                                    <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-colors duration-300 ${activeStep === index ? "bg-primary" : "bg-zinc-600 group-hover:bg-neutral-400"}`} />
                                 </div>
-                            ))}
-                        </div>
 
-                        <div className="mt-12 lg:ml-10">
-                            <Button
-                                size="lg"
-                                className="w-full sm:w-auto bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8 py-6 text-base shadow-lg shadow-primary/25"
-                                asChild
-                            >
-                                <a href={CONTACT.whatsappLink} target="_blank" rel="noopener noreferrer">
-                                    DA EL PRIMER PASO AHORA
-                                    <ArrowRight className="ml-2 h-5 w-5" />
-                                </a>
-                            </Button>
-                        </div>
+                                <div
+                                    onClick={() => setActiveStep(index)}
+                                    className={`p-5 sm:p-8 rounded-2xl border transition-all duration-300 cursor-pointer ${activeStep === index
+                                        ? "bg-zinc-900 border-primary/30 shadow-lg shadow-primary/5 scale-[1.01]"
+                                        : "bg-zinc-900/30 border-zinc-800/50 hover:bg-zinc-900/50 hover:border-zinc-700"
+                                        }`}
+                                >
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
+                                        <div className={`w-fit p-2 sm:p-3 rounded-xl transition-colors duration-300 ${activeStep === index ? "bg-primary/20 text-primary" : "bg-zinc-800 text-zinc-500"}`}>
+                                            <step.icon className="w-5 h-5 sm:w-6 sm:h-6" />
+                                        </div>
+                                        <div className="flex flex-col min-w-0 flex-1">
+                                            <span className={`text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 ${activeStep === index ? "text-primary" : "text-neutral-500"}`}>
+                                                Paso {step.number}
+                                            </span>
+                                            <h3 className={`text-base sm:text-xl font-bold transition-colors duration-300 leading-tight break-words ${activeStep === index ? "text-white" : "text-neutral-400"}`}>
+                                                {step.title}
+                                            </h3>
+                                        </div>
+                                    </div>
+
+                                    <p className={`leading-relaxed text-sm sm:text-base transition-colors duration-300 ${activeStep === index ? "text-neutral-300" : "text-neutral-600"}`}>
+                                        {step.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
+                    <div className="mt-16 text-center px-4">
+                        <Button
+                            size="lg"
+                            className="w-full sm:w-auto bg-primary text-black hover:bg-primary/90 font-black px-6 sm:px-10 py-5 sm:py-8 text-base sm:text-lg shadow-2xl shadow-primary/20 h-auto rounded-xl group uppercase tracking-tight"
+                            onClick={() => setIsModalOpen(true)}
+                        >
+                            <span className="flex items-center justify-center gap-2">
+                                DA EL PRIMER PASO AHORA
+                                <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform" />
+                            </span>
+                        </Button>
+                    </div>
                 </div>
             </div>
+            <EvaluationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </section>
     )
 }

@@ -11,7 +11,7 @@ import { NewsletterForm } from "@/components/newsletter-form"
 export function HeroSection() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isVisible, setIsVisible] = useState(false)
-  const [isExpanded, setIsExpanded] = useState(false)
+
 
   useEffect(() => {
     setIsVisible(true)
@@ -29,14 +29,28 @@ export function HeroSection() {
       >
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/hero.webp"
-            alt="Henry Castillo Entrenador Personal en Loja entrenando a cliente"
-            fill
-            className="object-cover object-top"
-            priority
-            aria-hidden="true"
-          />
+          {/* Desktop Image */}
+          <div className="hidden sm:block absolute inset-0">
+            <Image
+              src="/images/hero.webp"
+              alt="Henry Castillo Entrenador Personal en Loja entrenando a cliente"
+              fill
+              className="object-cover object-top"
+              priority
+              aria-hidden="true"
+            />
+          </div>
+          {/* Mobile Image */}
+          <div className="sm:hidden absolute inset-0">
+            <Image
+              src="/images/hero-movil.webp"
+              alt="Henry Castillo Entrenador Personal en Loja"
+              fill
+              className="object-cover object-[center_top]"
+              priority
+              aria-hidden="true"
+            />
+          </div>
           <div className="absolute inset-0 bg-black/60" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
@@ -61,67 +75,14 @@ export function HeroSection() {
                   }`}
               >
                 <div className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-light space-y-2">
-                  {/* Mobile View: Only Location */}
-                  <div className="block md:hidden pb-1">
-                    <p className="font-medium text-white/90 text-sm">
-                      📍 Presencial en Loja | 🌎 Online para todo el mundo.
-                    </p>
-                  </div>
-
-                  {/* Desktop View: Full Bio */}
-                  <div className="hidden md:block">
-                    <p>
-                      <strong className="block text-white mb-2">¿Buscas resultados duraderos?</strong>
-                      Soy Henry Castillo. Como Entrenador Personal, garantizo que tu esfuerzo dé frutos reales.
-                    </p>
-
-                    {!isExpanded && (
-                      <button
-                        onClick={() => setIsExpanded(true)}
-                        className="text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
-                      >
-                        Seguir leyendo
-                      </button>
-                    )}
-
-                    {isExpanded && (
-                      <div className="space-y-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                        <div className="bg-white/5 p-4 rounded-lg border border-white/10 text-justify">
-                          <p className="text-white/90">
-                            Metodología integral: Nutrición y entrenamiento basados en tu salud. No solo fuerza, sino bienestar a largo plazo.
-                          </p>
-                          <p className="text-white/90 mt-4 border-t border-white/10 pt-4 font-medium">
-                            📍 Presencial en Loja | 🌎 Online para todo el mundo.
-                          </p>
-                        </div>
-
-                        <button
-                          onClick={() => setIsExpanded(false)}
-                          className="text-primary hover:underline font-bold text-sm uppercase tracking-wide focus:outline-none"
-                        >
-                          Ocultar
-                        </button>
-                      </div>
-                    )}
-                  </div>
+                  <p>
+                    <strong className="block text-white mb-2">¿Buscas resultados duraderos?</strong>
+                    Soy Henry Castillo: como tu entrenador personal estaré ahí para ayudarte a cumplir tus objetivos.
+                  </p>
                 </div>
               </div>
 
-              {/* CTAs */}
-              <div
-                className={`flex flex-col sm:flex-row gap-4 pt-1 transition-all duration-700 delay-300 w-full sm:w-auto ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-                  }`}
-              >
-                <Button
-                  size="lg"
-                  className="text-base md:text-lg px-8 py-6 gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/25"
-                  onClick={() => setIsModalOpen(true)}
-                  aria-haspopup="dialog"
-                >
-                  <ClipboardCheck className="h-5 w-5" aria-hidden="true" />
-                  Evaluación Gratuita
-                </Button>
-              </div>
+
 
               <div
                 className={`hidden lg:flex items-center gap-8 pt-4 text-white/80 transition-all duration-700 delay-400 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"

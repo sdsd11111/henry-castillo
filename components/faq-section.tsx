@@ -17,24 +17,20 @@ const faqs = [
         answer: "Como Entrenador Personal con enfoque integral, mi prioridad es tu seguridad. Los exámenes de colesterol, glucosa y triglicéridos me permiten conocer tu estado metabólico real. No entreno a ciegas; diseño tu plan para que el ejercicio sea una herramienta de mejora interna y no un riesgo para tu salud."
     },
     {
-        question: "¿Qué es la Escala de Bristol y por qué la usamos?",
-        answer: "Es una herramienta visual para evaluar tu salud digestiva e intestinal. Un entrenamiento y una nutrición de élite no sirven de nada si tu cuerpo no absorbe los nutrientes correctamente. Monitorear esto nos ayuda a ajustar tu dieta para que tengas más energía y mejores resultados físicos."
+        question: "¿Qué compromiso espero por tu parte?",
+        answer: "Espero 12 semanas mínimas de asesoría, que rellenes diariamente unas tablas de progreso (solo requiere 2 minutos), que realices una revisión cada 15 días (siempre en domingo) y, sobre todo, que seas honesto y digas la verdad siempre. Sin eso, no puedo ayudarte."
+    },
+    {
+        question: "¿Los resultados están garantizados?",
+        answer: "La asesoría es un trabajo de dos, por eso no puedo asegurarte resultados por mi cuenta. Yo haré mi parte y estaré ahí para ayudarte a cumplir tus objetivos. Si te comprometes tanto como yo y sigues la planificación, estoy seguro de que mejorarás y los resultados llegarán."
     },
     {
         question: "¿Puedo entrenar Online si soy principiante?",
-        answer: "Para garantizar tu seguridad y una técnica impecable, recomiendo que los principiantes inicien de forma presencial en Loja. El servicio Online está reservado para atletas o personas con experiencia previa que ya dominan los movimientos básicos y buscan una programación científica a distancia."
+        answer: "Para garantizar tu seguridad y una técnica impecable, recomiendo que los principiantes inicien de forma presencial en Loja. El servicio Online está reservado para personas con experiencia previa mínima de 1 año que ya dominan los movimientos básicos."
     },
     {
-        question: "¿Cada cuánto tiempo se realizan las evaluaciones?",
-        answer: "Realizamos un seguimiento de progreso cada 15 días (medidas, peso y sensaciones) para ajustar tu plan. Además, solicitamos nuevos exámenes médicos cada 3 meses para validar científicamente la mejora de tu funcionamiento interno."
-    },
-    {
-        question: "¿El programa incluye asesoría médica?",
-        answer: "Soy Entrenador Personal certificado, no médico. Sin embargo, mi protocolo de entrenamiento es integral y analítico. Esto significa que no solo diseñamos rutinas, sino que interpretamos tus marcadores de salud para personalizar tu nutrición y cargas de trabajo. Actúo como un consultor técnico que utiliza la ciencia del ejercicio para que alcances tus metas de forma segura, profesional y eficiente."
-    },
-    {
-        question: "¿Qué incluye exactamente el plan de nutrición?",
-        answer: "Incluye un cálculo preciso de tus necesidades calóricas y macronutrientes basado en tus objetivos y tus análisis de sangre. Utilizamos tecnología (MyFitnessPal) para que aprendas a comer de forma inteligente, flexible y sin restricciones innecesarias."
+        question: "¿Tengo que dejar de comer lo que me gusta?",
+        answer: "En la mayoría de los casos no es necesario restringir alimentos. Sin embargo, si tu alimentación se basa principalmente en productos ultra procesados, lo más inteligente será reducir y distanciar su consumo para potenciar tu salud y rendimiento."
     }
 ]
 

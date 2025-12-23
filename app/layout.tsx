@@ -213,7 +213,7 @@ export default function RootLayout({
   }
 
   return (
-    <html lang="es" className="dark">
+    <html lang="es" className="dark overflow-x-hidden">
       <head>
         <script
           type="application/ld+json"
@@ -222,7 +222,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${michroma.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} ${michroma.variable} font-sans antialiased bg-background text-foreground overflow-x-hidden`}>
         {children}
         <Analytics />
       </body>

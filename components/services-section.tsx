@@ -16,62 +16,51 @@ import {
 
 const services = [
   {
-    title: "ENTRENAMIENTO PRESENCIAL: La seguridad de que lo estás haciendo bien",
+    title: "ENTRENAMIENTO PRESENCIAL",
     icon: MapPin,
     badge: "Recomendado 40+",
-    description: "📍 Disponible en Loja, Ecuador",
+    description: "La seguridad de que lo estás haciendo bien.",
     sections: [
+      {
+        title: "📍 Disponible en Loja",
+        items: []
+      },
       {
         title: "¿Para quién es?",
         items: [
-          { label: "Principiantes:", text: "Ideal para quienes desean comenzar desde cero de forma segura." },
-          { label: "Técnica en desarrollo:", text: "Para personas que aún no dominan la ejecución de los ejercicios." },
-          { label: "Atención Directa:", text: "Profesionales y personas con experiencia que prefieren supervisión constante de un Entrenador Personal en Loja." },
+          { label: "•", text: "Principiantes." },
+          { label: "•", text: "Personas que aún no tienen dominada la técnica de los ejercicios." },
+          { label: "•", text: "Personas con experiencia que prefieren atención directa y supervisión constante." },
         ]
       },
       {
         title: "¿Qué incluye?",
         items: [
-          { label: "✅ Planificación personalizada:", text: "Tu rutina diseñada a medida según tus objetivos." },
-          { label: "✅ Evaluación física completa:", text: "Análisis inicial detallado de tu condición actual." },
-          { label: "✅ Corrección en tiempo real:", text: "Supervisión postural y técnica constante para evitar lesiones." },
-          { label: "✅ Seguimiento por App:", text: "Control de tu progreso y evolución mediante una aplicación exclusiva." },
+          { label: "✅", text: "Planificación personalizada de la rutina de entrenamiento." },
+          { label: "✅", text: "Evaluación física completa." },
+          { label: "✅", text: "Corrección postural y técnica en tiempo real." },
+          { label: "✅", text: "Seguimiento continuo mediante una app." },
         ]
       }
     ]
   },
   {
-    title: "ENTRENAMIENTO ONLINE: Entrena sin importar dónde estés",
+    title: "ENTRENAMIENTO ONLINE",
     icon: Globe,
-    description: "Entrenamiento a distancia con calidad profesional.",
+    description: "Entrena sin importar dónde estés.",
     sections: [
       {
-        title: "¿Para quién es?",
+        title: "Requisito",
         items: [
-          { label: "Requisito exclusivo:", text: "Diseñado para personas con experiencia previa que ya dominan la técnica básica de los ejercicios y buscan la guía de un Coach fitness a distancia." },
+          { label: "•", text: "Exclusivo para personas con experiencia previa en entrenamiento que ya dominan la técnica básica de los ejercicios." },
         ]
       },
       {
         title: "¿Qué incluye?",
         items: [
-          { label: "✅ Planificación personalizada:", text: "Tu rutina de entrenamiento adaptada a tus objetivos y contexto específico." },
-          { label: "✅ Recursos videográficos:", text: "Guía visual detallada con videos explicativos de cada ejercicio para asegurar tu progreso." },
-          { label: "✅ Seguimiento por App:", text: "Control total de tus entrenamientos y evolución constante mediante una aplicación especializada." },
-        ]
-      }
-    ]
-  },
-  {
-    title: "Plan de Nutrición y Salud Integral",
-    icon: Apple,
-    description: "El motor que acelera tu transformación.",
-    sections: [
-      {
-        title: "Detalles",
-        items: [
-          { label: "Cálculo Científico:", text: "Macronutrientes ajustados mediante MyFitnessPal y tus exámenes de sangre." },
-          { label: "Bio-Individualidad:", text: "Dieta diseñada para mejorar marcadores de colesterol, glucosa y salud digestiva (Escala de Bristol)." },
-          { label: "Control:", text: "Seguimiento semanal de progreso con gráficas de evolución real." },
+          { label: "✅", text: "Planificación personalizada de la rutina de entrenamiento." },
+          { label: "✅", text: "Recursos videográficos explicativos de cada ejercicio de tu rutina." },
+          { label: "✅", text: "Seguimiento continuo mediante una app." },
         ]
       }
     ]
@@ -82,11 +71,21 @@ const services = [
     description: "📅 2 sesiones de 30 minutos",
     sections: [
       {
-        title: "Proceso",
+        title: "Sesión 1",
         items: [
-          { label: "Primera sesión (30 min):", text: "Nos reunimos para analizar tu rutina actual. Durante esta sesión, tomaré nota de tu contexto, objetivos, experiencia y circunstancias para diseñar un plan de entrenamiento personalizado realmente acorde a ti." },
-          { label: "Planificación:", text: "Tardaré como máximo 3 días hábiles en elaborar tu rutina estratégica como Coach fitness." },
-          { label: "Segunda sesión (30 min):", text: "Revisaremos detalle a detalle toda la estructura de tu nuevo plan. Te explicaré el porqué de cada decisión y resolveré tus dudas para que empieces a entrenar con total seguridad en Loja o desde cualquier lugar." },
+          { label: "🔹 Primera sesión (30 min):", text: "Nos reunimos para analizar tu rutina actual. Durante esta sesión tomaré nota de tu contexto, objetivos, experiencia y circunstancias, con el fin de diseñar un plan de entrenamiento realmente acorde a ti." },
+        ]
+      },
+      {
+        title: "Elaboración",
+        items: [
+          { label: "🔹 Planificación:", text: "Tardaré como máximo 3 días hábiles en elaborar tu rutina personalizada." },
+        ]
+      },
+      {
+        title: "Sesión 2",
+        items: [
+          { label: "🔹 Segunda sesión (30 min):", text: "Nos volvemos a reunir para revisar, detalle a detalle, toda la estructura del plan de entrenamiento. Te explicaré el porqué de cada decisión, resolveré todas tus dudas y dejaré todo claro para que puedas empezar con seguridad." },
         ]
       }
     ],
@@ -94,11 +93,11 @@ const services = [
 ]
 
 function ServiceCard({ service }: { service: typeof services[0] }) {
-  const [isOpen, setIsOpen] = useState(false)
+
 
   return (
     <Card
-      className={`bg-zinc-900/50 border-zinc-800 hover:border-primary/50 transition-all duration-300 relative overflow-hidden group flex flex-col ${isOpen ? "h-auto" : "h-full"}`}
+      className="bg-zinc-900/50 border-zinc-800 hover:border-primary/50 transition-all duration-300 relative overflow-hidden group flex flex-col h-full"
     >
       {service.badge && (
         <div className="absolute top-0 right-0 z-10">
@@ -120,8 +119,8 @@ function ServiceCard({ service }: { service: typeof services[0] }) {
         </p>
       </CardHeader>
 
-      <CardContent className="space-y-4 flex-grow flex flex-col justify-end">
-        <div className={`space-y-6 border-t border-zinc-800/50 overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? "max-h-[1000px] opacity-100 pt-4" : "max-h-0 opacity-0 pt-0"}`}>
+      <CardContent className="space-y-4 flex-grow flex flex-col">
+        <div className="space-y-6 border-t border-zinc-800/50 pt-4">
           {service.sections.map((section, i) => (
             <div key={i} className="space-y-3">
               {section.title && section.title !== "Detalles" && section.title !== "Proceso" && (
@@ -142,19 +141,6 @@ function ServiceCard({ service }: { service: typeof services[0] }) {
             </div>
           ))}
         </div>
-
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-full mt-auto hover:bg-zinc-800 text-primary hover:text-primary min-h-[40px]"
-        >
-          {isOpen ? (
-            <span className="flex items-center gap-2">Ver menos <ChevronUp className="h-4 w-4" /></span>
-          ) : (
-            <span className="flex items-center gap-2">Ver detalles <ChevronDown className="h-4 w-4" /></span>
-          )}
-        </Button>
       </CardContent>
     </Card>
   )
@@ -178,7 +164,8 @@ export function ServicesSection() {
             </span>
           </h2>
           <p className="text-neutral-400 text-lg sm:text-xl max-w-2xl mx-auto">
-            Selecciona la modalidad que mejor se adapte a tus objetivos. Todos mis planes incluyen el Protocolo de Salud Integral (seguimiento médico y nutrición científica).
+            Sin compromiso. <br />
+            Con total claridad desde el inicio.
           </p>
         </div>
 
@@ -208,7 +195,7 @@ export function ServicesSection() {
         </div>
 
         {/* Desktop Grid */}
-        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className="hidden md:grid md:grid-cols-3 gap-6 mb-16">
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} />
           ))}
