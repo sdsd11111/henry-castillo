@@ -187,7 +187,7 @@ export function ResultsSection() {
                         Resultados y Experiencias
                     </span>
                     <h2 id="results-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-                        Casos de Éxito: <span className="text-primary">Resultados Visibles</span>,<br className="hidden md:block" /> Salud Comprobada
+                        Casos de Éxito en Loja: <span className="text-primary">Resultados Visibles</span>,<br className="hidden md:block" /> Salud Comprobada
                     </h2>
                     <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
                         No solo lo digo yo, lo dicen mis clientes. Desliza para ver las transformaciones físicas y lee las opiniones de quienes ya integraron la ciencia a su entrenamiento.

@@ -77,7 +77,7 @@ export function HeroSection() {
                 <div className="text-base sm:text-lg md:text-xl text-white/90 leading-relaxed font-light space-y-2">
                   <p>
                     <strong className="block text-white mb-2">¿Buscas resultados duraderos?</strong>
-                    Soy Henry Castillo: como tu entrenador personal estaré ahí para ayudarte a cumplir tus objetivos.
+                    Soy Henry Castillo: como tu entrenador personal en Loja estaré ahí para ayudarte a cumplir tus objetivos.
                   </p>
                 </div>
               </div>

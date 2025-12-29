@@ -60,7 +60,7 @@ export function AboutSection() {
             <div className="relative aspect-[3/4] max-w-full sm:max-w-md mx-auto mb-10 overflow-hidden rounded-2xl">
               <Image
                 src="/images/seccion 1.webp"
-                alt="Henry Castillo - Entrenador Personal Certificado"
+                alt="Henry Castillo - Entrenador Personal Certificado en Loja"
                 fill
                 className="object-cover rounded-2xl shadow-2xl shadow-primary/10"
                 loading="lazy"
@@ -253,7 +253,7 @@ export function AboutSection() {
                 onClick={() => setIsModalOpen(true)}
               >
                 <ClipboardCheck className="h-5 w-5" />
-                <span>Evaluación Gratuita</span>
+                <span>Evaluación Gratuita en Loja</span>
               </Button>
               <p className="mt-4 text-xs sm:text-sm text-neutral-400 font-medium max-w-lg">
                 Si aún tienes dudas, agenda una cita gratuita de 40 minutos para evaluarte y aclarar tus inquietudes. Así podrás decidir, sin compromiso, si quieres iniciar mis asesorías.

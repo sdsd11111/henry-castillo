@@ -16,7 +16,7 @@ import {
 
 const services = [
   {
-    title: "ENTRENAMIENTO PRESENCIAL",
+    title: "ENTRENAMIENTO PRESENCIAL EN LOJA",
     icon: MapPin,
     badge: "Recomendado 40+",
     description: "La seguridad de que lo estás haciendo bien.",
