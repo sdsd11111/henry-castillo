@@ -11,19 +11,9 @@ export default function manifest(): MetadataRoute.Manifest {
         theme_color: '#000000',
         icons: [
             {
-                src: '/icon-light-32x32.png',
+                src: '/images/logo-cuadrado.png',
                 sizes: 'any',
                 type: 'image/png',
-            },
-            {
-                src: '/Logo Henry.webp',
-                sizes: '192x192',
-                type: 'image/webp',
-            },
-            {
-                src: '/Logo Henry.webp',
-                sizes: '512x512',
-                type: 'image/webp',
             },
         ],
     }

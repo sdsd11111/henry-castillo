@@ -88,10 +88,16 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-icon.png",
+    icon: [
+      { url: "/images/logo-cuadrado.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/images/logo-cuadrado.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/images/logo-cuadrado.png",
   },
+  manifest: "/manifest.webmanifest",
   generator: 'Next.js',
   applicationName: 'Henry Castillo Fitness',
   other: {
