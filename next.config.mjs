@@ -9,8 +9,10 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    unoptimized: true,
+    // Unoptimized maps to false by default, enabling the Image Optimization API.
+    // unoptimized: false, 
   },
+  compress: true, // Enable Gzip/Brotli compression
   experimental: {},
 }
 
