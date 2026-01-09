@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { query } from '@/lib/db'
 import { transporter } from '@/lib/email'
+import { getNewsletterTemplate } from '@/lib/email-templates'
 
 // Reusing the transporter from lib/email.ts to ensure consistent config
 
@@ -70,13 +71,10 @@ export async function POST(request: Request) {
                     from: `"Henry Castillo" <${process.env.EMAIL_USER}>`,
                     to: sub.email,
                     subject: subject,
-                    html: `
-                        <div style="font-family: Arial, sans-serif; color: #333;">
-                            ${message}
-                            <hr style="margin-top: 30px; border: 0; border-top: 1px solid #eee;" />
-                            <small style="color: #999;">Recibes esto porque te suscribiste al newsletter de Henry Castillo.</small>
-                        </div>
-                    `,
+                    html: getNewsletterTemplate({
+                        message: message,
+                        subject: subject
+                    }),
                     attachments: attachments // Add attachments here
                 })
                 return true
