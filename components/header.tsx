@@ -4,10 +4,12 @@ import { useState, useEffect } from "react"
 import { Calendar, Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { CONTACT } from "@/lib/constants"
+import { EvaluationModal } from "@/components/evaluation-modal"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,21 +67,16 @@ export function Header() {
             : "translate-x-10 opacity-0 pointer-events-none"
             }`}>
             <Button
-              asChild
               size="sm"
               className="gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold hidden sm:flex"
+              onClick={() => setIsModalOpen(true)}
             >
-              <a
-                href={CONTACT.calLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Agenda una llamada gratuita (abre en nueva ventana)"
-              >
-                <Calendar className="h-4 w-4" aria-hidden="true" />
-                <span>Agenda tu Evaluación Gratuita</span>
-              </a>
+              <Calendar className="h-4 w-4" aria-hidden="true" />
+              <span>Agenda tu Evaluación Gratuita</span>
             </Button>
           </div>
+
+          <EvaluationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
           {/* Mobile Menu Button - Optional: Keeping it accessible if needed, but per instructions 'Solamente', maybe hide too? 
                  If user needs NO menu at all, I should hide this. 

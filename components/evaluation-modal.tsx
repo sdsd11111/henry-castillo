@@ -45,6 +45,24 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
     }
 
     const nextSection = () => {
+        // Validación de campos obligatorios
+        if (currentSection === 1) {
+            if (!formData.email || !formData.nombreCompleto || !formData.edad || !formData.ocupacion) {
+                alert("Por favor completa todos los campos obligatorios.")
+                return
+            }
+            // Validar formato de email simple
+            if (!formData.email.includes("@")) {
+                alert("Por favor ingresa un correo electrónico válido.")
+                return
+            }
+        } else if (currentSection === 2) {
+            if (!formData.cambioPrincipal || !formData.porQueImportante || !formData.queTeHaImpedido || !formData.queHasIntentado || !formData.experienciaEntrenador) {
+                alert("Por favor completa todos los campos obligatorios.")
+                return
+            }
+        }
+
         if (currentSection < totalSections - 1) {
             setCurrentSection((prev) => prev + 1)
         }
@@ -104,6 +122,11 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
     const handleSubmit = async () => {
         if (!selectedDateTime) {
             alert("Por favor selecciona una fecha y hora para tu evaluación")
+            return
+        }
+
+        if (!formData.inversion) {
+            alert("Por favor selecciona un rango de inversión.")
             return
         }
 
@@ -261,6 +284,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                     <Input
                         id="email"
                         type="email"
+                        required
                         value={formData.email}
                         onChange={(e) => updateFormData("email", e.target.value)}
                         placeholder="tu@email.com"
@@ -275,6 +299,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                         </Label>
                         <Input
                             id="nombreCompleto"
+                            required
                             value={formData.nombreCompleto}
                             onChange={(e) => updateFormData("nombreCompleto", e.target.value)}
                             placeholder="Tu nombre"
@@ -288,6 +313,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                         <Input
                             id="edad"
                             type="number"
+                            required
                             value={formData.edad}
                             onChange={(e) => updateFormData("edad", e.target.value)}
                             placeholder="25"
@@ -302,6 +328,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                     </Label>
                     <Input
                         id="ocupacion"
+                        required
                         value={formData.ocupacion}
                         onChange={(e) => updateFormData("ocupacion", e.target.value)}
                         placeholder="Tu ocupación"
@@ -328,6 +355,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                     </p>
                     <Textarea
                         id="cambioPrincipal"
+                        required
                         value={formData.cambioPrincipal}
                         onChange={(e) => updateFormData("cambioPrincipal", e.target.value)}
                         placeholder="Ej: Quiero perder 10kg de grasa y ganar masa muscular..."
@@ -344,6 +372,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                     </p>
                     <Textarea
                         id="porQueImportante"
+                        required
                         value={formData.porQueImportante}
                         onChange={(e) => updateFormData("porQueImportante", e.target.value)}
                         placeholder="Ej: Quiero sentirme mejor conmigo mismo, tener más energía..."
@@ -360,6 +389,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                     </p>
                     <Textarea
                         id="queTeHaImpedido"
+                        required
                         value={formData.queTeHaImpedido}
                         onChange={(e) => updateFormData("queTeHaImpedido", e.target.value)}
                         placeholder="Ej: No tengo tiempo, no sé qué rutina seguir..."
@@ -376,6 +406,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                     </p>
                     <Textarea
                         id="queHasIntentado"
+                        required
                         value={formData.queHasIntentado}
                         onChange={(e) => updateFormData("queHasIntentado", e.target.value)}
                         placeholder="Ej: He probado varias dietas, apps de gimnasio..."
@@ -390,6 +421,7 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                     <p className="text-xs text-muted-foreground">Lo que te gustó o no te gustó</p>
                     <Textarea
                         id="experienciaEntrenador"
+                        required
                         value={formData.experienciaEntrenador}
                         onChange={(e) => updateFormData("experienciaEntrenador", e.target.value)}
                         placeholder="Ej: Nunca he trabajado con entrenador / Sí, pero no vi resultados..."
@@ -410,7 +442,6 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                 <Label className="text-sm">En cuanto a inversión mensual, ¿en qué rango te sentirías cómodo? *</Label>
                 <RadioGroup value={formData.inversion} onValueChange={(value) => updateFormData("inversion", value)} className="space-y-2">
                     {[
-                        { value: "menos-100", label: "Menos de $100" },
                         { value: "100-150", label: "Entre $100 y $150" },
                         { value: "mas-150", label: "Más de $150" },
                     ].map((option) => (
