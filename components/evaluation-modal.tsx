@@ -135,10 +135,12 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                 throw new Error(error.error || "Error al agendar evaluación")
             }
 
-            // Enviar mensaje a WhatsApp
+            // Enviar mensaje a WhatsApp (DESACTIVADO POR PETICIÓN DE USUARIO - SE ENVÍA POR CORREO)
+            /*
             const message = formatMessage()
             const whatsappUrl = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`
             window.open(whatsappUrl, "_blank")
+            */
 
             // Mostrar estado de éxito
             setIsSubmitted(true)
@@ -187,13 +189,13 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                         <div className="space-y-2">
                             <h3 className="text-2xl font-bold text-gray-900">¡Evaluación Agendada!</h3>
                             <p className="text-lg text-gray-600">
-                                Tu evaluación gratuita ha sido agendada exitosamente.
+                                Tus datos han sido enviados exitosamente.
                             </p>
                         </div>
 
                         {selectedDateTime && (
                             <div className="bg-primary/10 p-4 rounded-lg border border-primary/20">
-                                <p className="text-sm font-medium">📅 Fecha y hora:</p>
+                                <p className="text-sm font-medium">📅 Fecha y hora de tu cita:</p>
                                 <p className="font-bold text-lg">
                                     {format(selectedDateTime, "EEEE, d 'de' MMMM", { locale: es })}
                                 </p>
@@ -204,12 +206,12 @@ export function EvaluationModal({ isOpen, onClose }: EvaluationModalProps) {
                         )}
 
                         <div className="bg-gray-50 p-4 rounded-lg text-left text-sm space-y-2 border border-gray-100">
-                            <p className="font-semibold text-gray-700">Siguientes pasos:</p>
+                            <p className="font-semibold text-gray-700">¿Qué sigue ahora?</p>
                             <ol className="list-decimal list-inside space-y-1 text-gray-600">
-                                <li>Recibirás un email de confirmación en {formData.email}</li>
-                                <li>El evento fue agregado al calendario</li>
-                                <li>Se abrió WhatsApp con tu información</li>
-                                <li>Revisa y envía el mensaje para confirmar</li>
+                                <li>He recibido tu información por correo electrónico.</li>
+                                <li>Revisaré tus respuestas detalladamente antes de nuestra cita.</li>
+                                <li>Te llegará un email de confirmación con el link de Google Meet.</li>
+                                <li>Si necesitas contactarme urgente, puedes usar el botón de WhatsApp de la web.</li>
                             </ol>
                         </div>
 

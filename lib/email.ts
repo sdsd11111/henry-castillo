@@ -121,9 +121,16 @@ export async function sendAdminNotification(data: {
   nombre: string
   email: string
   telefono?: string
+  edad?: number
+  ocupacion?: string
+  objetivo?: string
+  motivacion?: string
+  obstaculos?: string
+  intentos_previos?: string
+  experiencia_entrenador?: string
+  inversion?: string
   fecha: string
   hora: string
-  objetivo?: string
   meetLink: string
 }) {
   const mailOptions = {
@@ -135,43 +142,96 @@ export async function sendAdminNotification(data: {
       <html>
       <head>
         <style>
-          body { font-family: Arial, sans-serif; }
-          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .header { background: #2c3e50; color: white; padding: 20px; border-radius: 5px 5px 0 0; }
-          .content { background: #ecf0f1; padding: 20px; border-radius: 0 0 5px 5px; }
-          .info { background: white; padding: 15px; margin: 10px 0; border-left: 4px solid #3498db; }
+          body { font-family: Arial, sans-serif; line-height: 1.5; color: #333; }
+          .container { max-width: 650px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; }
+          .header { background: #1a1a1a; color: white; padding: 25px; border-radius: 8px 8px 0 0; text-align: center; }
+          .content { padding: 25px; background: #ffffff; }
+          .section-title { font-size: 18px; font-weight: bold; color: #ff3333; border-bottom: 2px solid #ff3333; margin-top: 25px; padding-bottom: 5px; }
+          .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+          .info-item { background: #f9f9f9; padding: 12px; border-radius: 6px; border-left: 3px solid #ddd; }
+          .label { font-size: 12px; color: #666; text-transform: uppercase; font-weight: bold; }
+          .value { font-size: 15px; margin-top: 4px; font-weight: 500; }
+          .full-width { grid-column: span 2; }
+          .link-box { background: #eef2ff; padding: 15px; border-radius: 8px; text-align: center; margin-top: 20px; border: 1px dashed #6366f1; }
+          .footer { margin-top: 30px; font-size: 12px; color: #999; text-align: center; }
         </style>
       </head>
       <body>
         <div class="container">
           <div class="header">
-            <h2>🔔 Nueva Cita Agendada</h2>
+            <h1 style="margin:0;">Nueva Evaluación Agendada</h1>
+            <p style="margin:5px 0 0 0; opacity:0.8;">Tienes una nueva cita para evaluación gratuita</p>
           </div>
+          
           <div class="content">
-            <div class="info">
-              <h3>Información del Cliente:</h3>
-              <p><strong>Nombre:</strong> ${data.nombre}</p>
-              <p><strong>Email:</strong> ${data.email}</p>
-              ${data.telefono ? `<p><strong>Teléfono:</strong> ${data.telefono}</p>` : ''}
+            <div class="section-title">Información del Cliente</div>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="label">Nombre</div>
+                <div class="value">${data.nombre}</div>
+              </div>
+              <div class="info-item">
+                <div class="label">Edad</div>
+                <div class="value">${data.edad || 'No especificada'}</div>
+              </div>
+              <div class="info-item">
+                <div class="label">Email</div>
+                <div class="value">${data.email}</div>
+              </div>
+              <div class="info-item">
+                <div class="label">Ocupación</div>
+                <div class="value">${data.ocupacion || 'No especificada'}</div>
+              </div>
+            </div>
+
+            <div class="section-title">Detalles de la Cita</div>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="label">Fecha</div>
+                <div class="value">${data.fecha}</div>
+              </div>
+              <div class="info-item">
+                <div class="label">Hora</div>
+                <div class="value">${data.hora}</div>
+              </div>
             </div>
             
-            <div class="info">
-              <h3>Detalles de la Cita:</h3>
-              <p><strong>Fecha:</strong> ${data.fecha}</p>
-              <p><strong>Hora:</strong> ${data.hora}</p>
-              <p><strong>Google Meet:</strong> <a href="${data.meetLink}">${data.meetLink}</a></p>
+            <div class="link-box">
+              <div class="label">Link de la Reunión</div>
+              <a href="${data.meetLink}" style="color:#6366f1; font-weight:bold; text-decoration:none; font-size:16px;">${data.meetLink}</a>
+            </div>
+
+            <div class="section-title">Respuestas del Formulario</div>
+            <div class="info-grid">
+              <div class="info-item full-width">
+                <div class="label">Objetivo Principal</div>
+                <div class="value">${data.objetivo || 'N/A'}</div>
+              </div>
+              <div class="info-item full-width">
+                <div class="label">¿Por qué es importante?</div>
+                <div class="value">${data.motivacion || 'N/A'}</div>
+              </div>
+              <div class="info-item full-width">
+                <div class="label">¿Qué le ha impedido conseguirlo?</div>
+                <div class="value">${data.obstaculos || 'N/A'}</div>
+              </div>
+              <div class="info-item full-width">
+                <div class="label">Intentos previos</div>
+                <div class="value">${data.intentos_previos || 'N/A'}</div>
+              </div>
+              <div class="info-item full-width">
+                <div class="label">Experiencia con entrenador</div>
+                <div class="value">${data.experiencia_entrenador || 'N/A'}</div>
+              </div>
+              <div class="info-item">
+                <div class="label">Inversión mensual cómoda</div>
+                <div class="value">${data.inversion || 'N/A'}</div>
+              </div>
             </div>
             
-            ${data.objetivo ? `
-            <div class="info">
-              <h3>Objetivo del Cliente:</h3>
-              <p>${data.objetivo}</p>
+            <div class="footer">
+              Este es un mensaje generado automáticamente por el sistema de reservas.
             </div>
-            ` : ''}
-            
-            <p style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #bdc3c7;">
-              <small>Email enviado automáticamente por el sistema de reservas.</small>
-            </p>
           </div>
         </div>
       </body>
