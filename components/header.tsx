@@ -6,7 +6,12 @@ import { Button } from "@/components/ui/button"
 import { CONTACT } from "@/lib/constants"
 import { EvaluationModal } from "@/components/evaluation-modal"
 
-export function Header() {
+interface HeaderProps {
+  shouldOpenModal?: boolean
+  onModalStateChange?: () => void
+}
+
+export function Header({ shouldOpenModal = false, onModalStateChange }: HeaderProps = {}) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -18,6 +23,20 @@ export function Header() {
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Auto-open modal when shouldOpenModal prop is true
+  useEffect(() => {
+    if (shouldOpenModal && !isModalOpen) {
+      setIsModalOpen(true)
+    }
+  }, [shouldOpenModal, isModalOpen])
+
+  const handleModalClose = () => {
+    setIsModalOpen(false)
+    if (onModalStateChange) {
+      onModalStateChange()
+    }
+  }
 
   const navLinks = [
     { href: "#sobre-mi", label: "Sobre mí" },
@@ -76,7 +95,7 @@ export function Header() {
             </Button>
           </div>
 
-          <EvaluationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          <EvaluationModal isOpen={isModalOpen} onClose={handleModalClose} />
 
           {/* Mobile Menu Button - Optional: Keeping it accessible if needed, but per instructions 'Solamente', maybe hide too? 
                  If user needs NO menu at all, I should hide this. 
