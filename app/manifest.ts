@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
     return {
         name: 'Henry Castillo - Entrenador Personal',
         short_name: 'Henry Castillo',
-        description: 'Entrenamiento personal científico e integral en Loja, Ecuador.',
+        description: 'Entrenamiento personal integral en Loja, Ecuador.',
         start_url: '/',
         display: 'standalone',
         background_color: '#000000',
@@ -18,6 +18,16 @@ export default function manifest(): MetadataRoute.Manifest {
             {
                 src: '/apple-touch-icon.png',
                 sizes: '180x180',
+                type: 'image/png',
+            },
+            {
+                src: '/images/logo-cuadrado.png',
+                sizes: '192x192',
+                type: 'image/png',
+            },
+            {
+                src: '/images/logo-cuadrado.png',
+                sizes: '512x512',
                 type: 'image/png',
             },
         ],

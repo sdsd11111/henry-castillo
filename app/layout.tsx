@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: "Henry Castillo - Entrenador Personal en Loja | Nutrición y Fitness",
     template: `%s | ${SITE.name}`,
   },
-  description: "Entrenamiento personal científico e integral en Loja, Ecuador. Transforma tu físico y vitalidad con planes de nutrición y ejercicio personalizados.",
+  description: "Entrenamiento personal integral en Loja, Ecuador. Transforma tu físico y vitalidad con planes de nutrición y ejercicio personalizados.",
   keywords: [
     "Entrenador personal Loja",
     "Nutrición deportiva Loja",
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     locale: "es_EC",
     url: "https://teamhenrycastillo.com",
     title: "Henry Castillo - Entrenador Personal en Loja | Resultados Reales",
-    description: "Transforma tu cuerpo y mente con un enfoque científico. Entrenamiento presencial en Loja y asesoría online mundial.",
+    description: "Transforma tu cuerpo y mente con un enfoque integral. Entrenamiento presencial en Loja y asesoría online mundial.",
     siteName: "Henry Castillo Team",
     images: [
       {
@@ -141,6 +141,7 @@ export default function RootLayout({
         "@id": "https://teamhenrycastillo.com/#business",
         "name": "Henry Castillo Team",
         "image": "https://teamhenrycastillo.com/og-image.webp",
+        "logo": "https://teamhenrycastillo.com/images/logo-cuadrado.png",
         "url": "https://teamhenrycastillo.com",
         "telephone": "+593986562727",
         "priceRange": "$$",
@@ -285,14 +286,6 @@ export default function RootLayout({
             "item": "https://teamhenrycastillo.com/"
           }
         ]
-      },
-      {
-        "@type": "AggregateRating",
-        "@id": "https://teamhenrycastillo.com/#rating",
-        "ratingValue": "5.0",
-        "reviewCount": "9",
-        "bestRating": "5",
-        "worstRating": "1"
       }
     ]
   }
