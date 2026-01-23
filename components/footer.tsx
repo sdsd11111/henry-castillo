@@ -29,7 +29,7 @@ export function Footer() {
               </div>
             </Link>
             <p className="text-neutral-400 text-sm leading-relaxed">
-              Entrenamiento personal con enfoque científico e integral. Elevando tu rendimiento físico y vitalidad desde Loja, Ecuador.
+              Entrenamiento personal con enfoque integral. Elevando tu rendimiento físico y vitalidad desde Loja, Ecuador.
             </p>
           </div>
 

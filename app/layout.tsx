@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Henry Castillo - Entrenador Personal en Loja",
-    description: "Entrenamiento inteligente y nutrición basada en ciencia. Empieza tu cambio hoy.",
+    description: "Entrenamiento inteligente y nutrición integral. Empieza tu cambio hoy.",
     images: ["/og-image.webp"],
   },
   robots: {
@@ -92,12 +92,13 @@ export const metadata: Metadata = {
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-48x48.png', sizes: '48x48', type: 'image/png' },
     ],
     apple: [
       { url: '/apple-touch-icon.png' },
     ],
   },
-  manifest: "/manifest.webmanifest",
+  manifest: "/manifest.json",
   generator: 'Next.js',
   applicationName: 'Henry Castillo Fitness',
   other: {
@@ -253,7 +254,7 @@ export default function RootLayout({
               "itemOffered": {
                 "@type": "Service",
                 "name": "Entrenamiento Presencial en Loja",
-                "description": "Entrenamiento personal científico e integral en Loja, Ecuador"
+                "description": "Entrenamiento personal integral en Loja, Ecuador"
               }
             },
             {

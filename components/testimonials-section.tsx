@@ -19,7 +19,7 @@ const testimonials = [
     image: "/latina-woman-fitness-healthy.jpg",
     rating: 5,
     text: "Lo que más valoro es que no me vendieron falsas promesas. Me explicaron la ciencia detrás de cada ejercicio y me enseñaron a escuchar mi cuerpo.",
-    highlight: "Enfoque científico",
+    highlight: "Enfoque integral",
   },
   {
     id: 3,
@@ -69,7 +69,7 @@ export function TestimonialsSection() {
             Lo que dicen quienes han entrenado conmigo
           </h2>
           <p className="text-gray-400 text-base md:text-lg">
-            Historias de transformación basadas en ciencia y constancia
+            Historias de transformación basadas en la constancia
           </p>
         </div>
 
