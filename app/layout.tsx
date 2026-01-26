@@ -142,7 +142,7 @@ export default function RootLayout({
         "@id": "https://teamhenrycastillo.com/#business",
         "name": "Henry Castillo Team",
         "image": "https://teamhenrycastillo.com/og-image.webp",
-        "logo": "https://teamhenrycastillo.com/images/logo-cuadrado.png",
+        "logo": "https://teamhenrycastillo.com/icon-512.png",
         "url": "https://teamhenrycastillo.com",
         "telephone": "+593986562727",
         "priceRange": "$$",
